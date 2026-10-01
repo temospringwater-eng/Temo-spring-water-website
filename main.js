@@ -7,8 +7,41 @@
     return "https://wa.me/" + WA_NUMBER + "?text=" + encodeURIComponent(message);
   }
 
+  function normalizeAssetUrls(){
+    document.querySelectorAll("[src],[href]").forEach(function(el){
+      var attrs = [];
+      if (el.hasAttribute("src")) attrs.push("src");
+      if (el.hasAttribute("href")) attrs.push("href");
+
+      attrs.forEach(function(attr){
+        var value = el.getAttribute(attr);
+        if (!value || value.startsWith("#") || value.startsWith("mailto:") || value.startsWith("tel:") || value.startsWith("http") || value.startsWith("data:")) return;
+
+        var fixed = value
+          .replace(/^(?:\.\/)?,?\/assets\//, "/")
+          .replace(/assets\//g, "")
+          .replace(/\/assets\//g, "/");
+
+        if (fixed !== value) {
+          el.setAttribute(attr, fixed);
+        }
+      });
+    });
+
+    document.querySelectorAll("style").forEach(function(style){
+      var css = style.textContent || "";
+      if (!css.includes("assets/")) return;
+      style.textContent = css
+        .replace(/\/assets\/fonts\//g, "/")
+        .replace(/assets\//g, "")
+        .replace(/\/assets\//g, "/");
+    });
+  }
+
   // ---------- Mobile nav ----------
   document.addEventListener("DOMContentLoaded", function(){
+    normalizeAssetUrls();
+
     var toggle = document.querySelector(".nav-toggle");
     var closeBtn = document.querySelector(".mobile-close");
     var mobileNav = document.querySelector(".mobile-nav");
