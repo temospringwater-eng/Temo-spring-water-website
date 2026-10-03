@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow">
+<title>Join TEMO Water Club — Account Preview</title>
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="premium-home.css">
+<link rel="stylesheet" href="water-club.css">
+</head>
+<body class="premium-home water-club-page">
+<main class="wc-auth-shell">
+  <section class="wc-auth-card" aria-labelledby="signup-title">
+    <div class="wc-auth-logo"><a href="/"><img src="logo-full-320.webp" alt="TEMO Spring Water" onerror="this.onerror=null;this.src='logo-full.png';"></a></div>
+    <div class="wc-kicker" style="color:var(--wc-blue);text-align:center;">Secure account setup</div>
+    <h1 id="signup-title">Join Water Club</h1>
+    <p>The real flow will verify your phone first, then link an existing TEMO customer or create a new member profile.</p>
+    <form class="wc-auth-form" data-auth-prototype>
+      <div class="wc-auth-field">
+        <label for="signup-phone">Mobile / WhatsApp number</label>
+        <input id="signup-phone" type="tel" placeholder="+92 3XX XXXXXXX" autocomplete="tel" required>
+      </div>
+      <button class="wc-btn wc-btn-primary" type="submit">Verify number & continue</button>
+    </form>
+    <div class="wc-auth-alert"><strong>Security gate:</strong> this preview does not create accounts, send OTPs, store credentials or expose customer records.</div>
+    <div class="wc-auth-status" role="status"></div>
+    <div class="wc-auth-links">
+      <a href="water-club-login.html">Already a member? Login</a>
+      <a href="water-club.html">Back to Water Club</a>
+    </div>
+  </section>
+</main>
+<script src="water-club-auth.js"></script>
+</body>
+</html>
