@@ -16,19 +16,23 @@
     <div class="wc-auth-logo"><a href="/"><img src="logo-full-320.webp" alt="TEMO Spring Water" onerror="this.onerror=null;this.src='logo-full.png';"></a></div>
     <div class="wc-kicker" style="color:var(--wc-blue);text-align:center;">TEMO Water Club</div>
     <h1 id="login-title">Member Login</h1>
-    <p>Planned secure login will use your verified mobile number and OTP.</p>
-    <form class="wc-auth-form" data-auth-prototype>
+    <p>This preview now uses the existing TEMO ERP customer account. Phone OTP will be added to the same account later; no duplicate account will be created.</p>
+    <form class="wc-auth-form" data-auth-login>
       <div class="wc-auth-field">
-        <label for="login-phone">Mobile / WhatsApp number</label>
-        <input id="login-phone" type="tel" placeholder="+92 3XX XXXXXXX" autocomplete="tel" required>
+        <label for="login-identifier">Email or customer username</label>
+        <input id="login-identifier" name="identifier" type="text" autocomplete="username" maxlength="320" required>
       </div>
-      <button class="wc-btn wc-btn-primary" type="submit">Send secure OTP</button>
+      <div class="wc-auth-field">
+        <label for="login-password">Password</label>
+        <input id="login-password" name="password" type="password" autocomplete="current-password" maxlength="200" required>
+      </div>
+      <button class="wc-btn wc-btn-primary" type="submit">Secure member login</button>
     </form>
-    <div class="wc-auth-alert"><strong>Preview only:</strong> real OTP/login is intentionally disabled until the trusted backend, provider and secure sessions are connected.</div>
-    <div class="wc-auth-status" role="status"></div>
+    <div class="wc-auth-alert"><strong>Preview branch:</strong> login works only after the Worker is connected to the deployed ERP through <code>ERP_API_BASE_URL</code>. Your password is not stored in website JavaScript.</div>
+    <div class="wc-auth-status" role="status" aria-live="polite"></div>
     <div class="wc-auth-links">
       <a href="water-club-signup.html">New member signup</a>
-      <a href="water-club-account.html">View dashboard demo</a>
+      <a href="water-club-account.html">Member dashboard</a>
       <a href="water-club.html">Back to Water Club</a>
     </div>
   </section>
