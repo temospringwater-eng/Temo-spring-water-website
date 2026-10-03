@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TEMO Water Club Member Dashboard Demo</title>
+<meta name="robots" content="noindex,nofollow">
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="preload" href="inter-normal-400.woff" as="font" type="font/woff" crossorigin>
+<link rel="preload" href="inter-normal-700.woff" as="font" type="font/woff" crossorigin>
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="premium-home.css">
+<link rel="stylesheet" href="water-club.css">
+</head>
+<body class="premium-home water-club-page">
+
+<header class="p-header">
+  <div class="p-container p-header-inner">
+    <a href="/" class="p-brand">
+      <img src="logo-full-320.webp" alt="TEMO Spring Water" width="320" height="112" onerror="this.onerror=null;this.src='logo-full.png';">
+    </a>
+    <nav class="p-nav main-nav">
+      <a href="/">Home</a>
+      <a href="products.html">Products</a>
+      <a href="water-club.html" class="active">Water Club</a>
+      <a href="business.html">Business (B2B)</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <div class="p-header-actions">
+      <a class="p-btn p-btn--outline" href="water-club.html">Water Club</a>
+      <a class="p-btn p-btn--primary" href="https://wa.me/923106666369" target="_blank" rel="noopener">Contact TEMO</a>
+    </div>
+    <button class="p-menu nav-toggle" type="button" aria-label="Open menu" style="font-size:26px;">☰</button>
+  </div>
+</header>
+
+<div class="mobile-nav">
+  <div class="mobile-nav-top">
+    <a href="/" class="p-brand"><img src="logo-full-320.webp" alt="TEMO Spring Water" width="320" height="112"></a>
+    <button class="mobile-close" type="button" aria-label="Close menu">&times;</button>
+  </div>
+  <a href="/">Home</a>
+  <a href="products.html">Products</a>
+  <a href="water-club.html">Water Club</a>
+  <a href="business.html">Business (B2B)</a>
+  <a href="contact.html">Contact</a>
+</div>
+
+<main class="wc-dashboard">
+  <div class="wc-wrap">
+    <div class="wc-dashboard-head">
+      <div>
+        <div class="wc-kicker" style="color:var(--wc-blue)">TEMO Water Club</div>
+        <h1>Member Dashboard</h1>
+      </div>
+      <div class="wc-demo-badge">Demo data only — no real customer account</div>
+    </div>
+
+    <div class="wc-dash-grid">
+      <div class="wc-dash-main">
+        <section class="wc-card">
+          <h2>Welcome, Sample Member</h2>
+          <p style="color:var(--wc-muted);margin-top:-6px;">Home Plan • Weekly delivery • Demo account</p>
+          <div class="wc-stats">
+            <div class="wc-stat"><strong>65</strong><span>Reward points</span></div>
+            <div class="wc-stat"><strong>35</strong><span>Points to free 19L refill</span></div>
+            <div class="wc-stat"><strong>13</strong><span>Completed qualifying orders</span></div>
+            <div class="wc-stat"><strong>2</strong><span>Successful referrals</span></div>
+          </div>
+          <div style="margin-top:22px;">
+            <strong style="color:var(--wc-navy)">Progress to next reward</strong>
+            <div class="wc-progress" aria-label="65 of 100 points"><span></span></div>
+            <div style="display:flex;justify-content:space-between;color:var(--wc-muted);font-size:.78rem;"><span>65 points</span><span>100 = 1 free 19L refill</span></div>
+          </div>
+        </section>
+
+        <section class="wc-card">
+          <h2>Next delivery</h2>
+          <div class="wc-delivery">
+            <div>
+              <strong>2 × 19L bottles</strong>
+              <span>Sample schedule: Monday • 10:00 AM – 1:00 PM</span>
+              <span>Islamabad • exact address hidden in this demo</span>
+            </div>
+            <div class="wc-pill">Scheduled</div>
+          </div>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:16px;">
+            <a class="wc-btn wc-btn-primary" href="https://wa.me/923106666369" target="_blank" rel="noopener">Change delivery</a>
+            <a class="wc-btn" style="border-color:var(--wc-line);color:var(--wc-navy);background:#fff;" href="https://wa.me/923106666369" target="_blank" rel="noopener">Pause plan</a>
+          </div>
+        </section>
+
+        <section class="wc-card">
+          <h2>Recent activity</h2>
+          <div class="wc-table-wrap">
+            <table class="wc-table">
+              <thead><tr><th>Date</th><th>Activity</th><th>Status</th><th>Points</th></tr></thead>
+              <tbody>
+                <tr><td>Demo</td><td>19L refill delivery</td><td>Delivered</td><td>+5</td></tr>
+                <tr><td>Demo</td><td>Referral completed</td><td>Verified</td><td>+20</td></tr>
+                <tr><td>Demo</td><td>19L refill delivery</td><td>Delivered</td><td>+5</td></tr>
+                <tr><td>Demo</td><td>First Water Club order</td><td>Delivered</td><td>+5 bonus</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+
+      <aside class="wc-dash-side">
+        <section class="wc-card">
+          <h3>Your referral code</h3>
+          <p style="color:var(--wc-muted);font-size:.86rem;">Demo code for layout preview only.</p>
+          <div class="wc-referral-code">
+            <code id="demo-referral">TEMO-DEMO-001</code>
+            <button class="wc-copy-btn" type="button" id="copy-referral">Copy</button>
+          </div>
+          <p class="wc-note">A referral reward would only be credited after the referred customer's first paid delivery is verified.</p>
+        </section>
+
+        <section class="wc-card">
+          <h3>19L bottle ledger</h3>
+          <div class="wc-bottle-ledger">
+            <div class="wc-ledger-item"><strong>2</strong><span>Bottles with customer</span></div>
+            <div class="wc-ledger-item"><strong>0</strong><span>Returns pending</span></div>
+          </div>
+        </section>
+
+        <section class="wc-card">
+          <h3>Quick actions</h3>
+          <div class="wc-dashboard-actions">
+            <a href="https://wa.me/923106666369" target="_blank" rel="noopener"><span>Reorder water</span><span>→</span></a>
+            <a href="https://wa.me/923106666369" target="_blank" rel="noopener"><span>Change schedule</span><span>→</span></a>
+            <a href="https://wa.me/923106666369" target="_blank" rel="noopener"><span>Report bottle return</span><span>→</span></a>
+            <a href="contact.html"><span>Get support</span><span>→</span></a>
+          </div>
+        </section>
+
+        <section class="wc-card">
+          <h3>Account plan</h3>
+          <p style="margin:0;color:var(--wc-muted);font-size:.86rem;line-height:1.6;">Home Plan<br>Weekly schedule<br>Reward points enabled<br>Referral benefits enabled</p>
+        </section>
+      </aside>
+    </div>
+  </div>
+</main>
+
+<footer class="p-footer">
+  <div class="p-container">
+    <div class="p-footer-bottom" style="margin-top:0;">
+      <span>© 2026 TEMO Spring Water</span>
+      <span>Water Club Member Dashboard — Prototype</span>
+    </div>
+  </div>
+</footer>
+
+<script src="main.js"></script>
+<script src="premium-home.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded",function(){
+  var btn=document.getElementById("copy-referral");
+  var code=document.getElementById("demo-referral");
+  if(btn&&code){
+    btn.addEventListener("click",function(){
+      var value=code.textContent;
+      if(navigator.clipboard){navigator.clipboard.writeText(value);}
+      btn.textContent="Copied";
+      setTimeout(function(){btn.textContent="Copy";},1400);
+    });
+  }
+});
+</script>
+</body>
+</html>
