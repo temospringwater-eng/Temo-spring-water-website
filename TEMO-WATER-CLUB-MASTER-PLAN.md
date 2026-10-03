@@ -8,7 +8,7 @@ Do not merge to `main` or make the redesign live until final approval and go-liv
 ## Phase Status
 
 1. Current branch audit — COMPLETE
-2. Water Club business rules — IN PROGRESS
+2. Water Club business rules — COMPLETE
 3. Customer journey — PENDING
 4. Real member account/auth — PENDING
 5. Subscription & delivery engine — PENDING
@@ -67,4 +67,4 @@ Do not merge to `main` or make the redesign live until final approval and go-liv
 - B2B accounts may use separate contract-specific reward settings
 
 ## Immediate Next Phase
-Phase 2: finalize and lock the business rules that affect backend design before implementing real accounts or ERP integration.
+Phase 3: define the exact customer journey from Water Club signup through plan selection, delivery scheduling, account creation and first delivery before implementing real authentication/backend flows.
