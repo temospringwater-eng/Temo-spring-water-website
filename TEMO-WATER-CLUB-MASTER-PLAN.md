@@ -11,7 +11,7 @@ Do not merge to `main` or make the redesign live until final approval and go-liv
 2. Water Club business rules — COMPLETE
 3. Customer journey — COMPLETE
 4. Website backend API foundation — COMPLETE
-5. Real member account/auth — STEP 4B ADAPTER READY / DEPLOYMENT + OTP + TESTS PENDING
+5. Real member account/auth — STEP 4B ADAPTER + SOURCE VALIDATION READY / HTTPS ERP STAGING PENDING
 6. Subscription & delivery engine — PENDING
 7. Rewards engine — PENDING
 8. Referral system — PENDING
@@ -83,11 +83,8 @@ Phone OTP remains fail-closed until an approved provider is configured. No fake 
 - B2B accounts may use separate contract-specific reward settings
 
 ## Immediate Next Phase
-Finish Step 4B validation before moving to the subscription/delivery engine:
-1. deploy or identify the trusted HTTPS ERP backend URL,
-2. configure Worker `ERP_API_BASE_URL`,
-3. route preview/test `/api/*` traffic to the Worker,
-4. test valid login, invalid login, logout, expired session, customer isolation and dashboard data,
-5. configure an approved OTP provider only when ready.
+Create or identify a reachable **HTTPS staging deployment of the existing TEMO ERP**. Do not create another ERP/backend. Once the staging URL exists, configure the website Worker `ERP_API_BASE_URL`, provision one test customer portal account in staging only, and execute the Step 4B login/session/tenant-isolation test matrix documented in `backend/STEP-4B-VALIDATION.md`.
+
+Phone OTP remains a later configuration item and must stay fail-closed until an approved provider is available.
 
 Do not route production traffic, merge to `main`, or go live without explicit owner approval.
