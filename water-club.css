@@ -114,3 +114,52 @@ body.water-club-page{margin:0;background:#fff;color:var(--wc-ink);font-family:'I
 .wc-example strong{font-size:1.05rem}
 .wc-example span{display:block;color:#d8ebf8;margin-top:6px;font-size:.86rem;line-height:1.55}
 @media(max-width:760px){.wc-rules-grid{grid-template-columns:1fr}.wc-rule-table th,.wc-rule-table td{padding:11px 7px;font-size:.8rem}}
+
+
+/* member dashboard */
+.wc-dashboard{padding:70px 0 90px;background:linear-gradient(180deg,#f7fbff,#eef7ff)}
+.wc-dashboard-head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:28px}
+.wc-dashboard-head h1{font-size:clamp(2.2rem,5vw,3.6rem);margin:8px 0 0;color:var(--wc-navy);letter-spacing:-.04em}
+.wc-demo-badge{display:inline-flex;align-items:center;gap:8px;background:#fff5d8;color:#7c5a00;border:1px solid #efd58a;border-radius:999px;padding:9px 13px;font-size:.78rem;font-weight:800}
+.wc-dash-grid{display:grid;grid-template-columns:1.4fr .8fr;gap:22px}
+.wc-dash-main{display:grid;gap:22px}
+.wc-dash-side{display:grid;gap:22px;align-content:start}
+.wc-card{background:#fff;border:1px solid var(--wc-line);border-radius:24px;padding:24px;box-shadow:0 14px 40px rgba(6,43,83,.07)}
+.wc-card h2,.wc-card h3{color:var(--wc-navy);margin-top:0}
+.wc-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.wc-stat{background:linear-gradient(180deg,#fbfdff,#f2f9ff);border:1px solid var(--wc-line);border-radius:18px;padding:18px}
+.wc-stat strong{display:block;font-size:1.8rem;color:var(--wc-navy);letter-spacing:-.03em}
+.wc-stat span{display:block;margin-top:5px;font-size:.78rem;color:var(--wc-muted)}
+.wc-progress{height:12px;border-radius:999px;background:#e7eff6;overflow:hidden;margin:14px 0 8px}
+.wc-progress>span{display:block;height:100%;width:65%;background:linear-gradient(90deg,var(--wc-blue),var(--wc-sky));border-radius:inherit}
+.wc-delivery{display:grid;grid-template-columns:1fr auto;gap:18px;align-items:center;padding:18px;border:1px solid var(--wc-line);border-radius:18px;background:#fbfdff}
+.wc-delivery strong{display:block;color:var(--wc-navy)}
+.wc-delivery span{display:block;color:var(--wc-muted);font-size:.84rem;margin-top:5px}
+.wc-pill{display:inline-flex;align-items:center;border-radius:999px;padding:8px 11px;background:#eaf7ef;color:#137a42;font-size:.74rem;font-weight:800}
+.wc-table-wrap{overflow:auto}
+.wc-table{width:100%;border-collapse:collapse;min-width:620px}
+.wc-table th,.wc-table td{padding:13px 10px;border-bottom:1px solid var(--wc-line);text-align:left;font-size:.84rem}
+.wc-table th{font-size:.72rem;text-transform:uppercase;letter-spacing:.08em;color:var(--wc-muted)}
+.wc-table td{color:#34516a}
+.wc-table tr:last-child td{border-bottom:0}
+.wc-referral-code{display:flex;align-items:center;justify-content:space-between;gap:12px;background:#f2f8ff;border:1px dashed #8ab7e8;border-radius:16px;padding:14px 16px;margin:14px 0}
+.wc-referral-code code{font-size:1.05rem;color:var(--wc-navy);font-weight:900}
+.wc-copy-btn{border:0;background:var(--wc-blue);color:#fff;border-radius:10px;padding:9px 12px;font-weight:800;cursor:pointer}
+.wc-bottle-ledger{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.wc-ledger-item{border:1px solid var(--wc-line);border-radius:16px;padding:16px;background:#fbfdff}
+.wc-ledger-item strong{display:block;font-size:1.4rem;color:var(--wc-navy)}
+.wc-ledger-item span{font-size:.78rem;color:var(--wc-muted)}
+.wc-dashboard-actions{display:grid;gap:10px}
+.wc-dashboard-actions a{display:flex;align-items:center;justify-content:space-between;padding:13px 14px;border:1px solid var(--wc-line);border-radius:14px;font-weight:800;color:var(--wc-navy);background:#fff}
+.wc-dashboard-actions a:hover{border-color:rgba(11,91,211,.35);background:#f7fbff}
+@media(max-width:950px){
+  .wc-dash-grid{grid-template-columns:1fr}
+  .wc-stats{grid-template-columns:1fr 1fr}
+}
+@media(max-width:620px){
+  .wc-dashboard-head{display:block}
+  .wc-demo-badge{margin-top:14px}
+  .wc-stats{grid-template-columns:1fr}
+  .wc-delivery{grid-template-columns:1fr}
+  .wc-bottle-ledger{grid-template-columns:1fr}
+}
