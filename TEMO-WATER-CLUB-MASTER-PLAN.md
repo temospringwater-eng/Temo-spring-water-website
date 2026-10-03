@@ -10,25 +10,26 @@ Do not merge to `main` or make the redesign live until final approval and go-liv
 1. Current branch audit — COMPLETE
 2. Water Club business rules — COMPLETE
 3. Customer journey — COMPLETE
-4. Real member account/auth — FOUNDATION READY / BACKEND PENDING
-5. Subscription & delivery engine — PENDING
-6. Rewards engine — PENDING
-7. Referral system — PENDING
-8. 19L bottle ledger — PENDING
-9. ERP integration — PENDING
-10. Admin Water Club dashboard — PENDING
-11. Driver integration — PENDING
-12. Payments / Raast P2M — PENDING
-13. B2B Water Club — PENDING
-14. Notifications — PENDING
-15. Website completion — PENDING
-16. SEO — PENDING
-17. Performance — PENDING
-18. Security — PENDING
-19. Legal/customer policies — PENDING
-20. Full testing — PENDING
-21. Staging/preview approval — PENDING
-22. Go live — PENDING
+4. Website backend API foundation — COMPLETE
+5. Real member account/auth — FOUNDATION READY / BACKEND CONNECTION PENDING
+6. Subscription & delivery engine — PENDING
+7. Rewards engine — PENDING
+8. Referral system — PENDING
+9. 19L bottle ledger — PENDING
+10. ERP integration — PENDING
+11. Admin Water Club dashboard — PENDING
+12. Driver integration — PENDING
+13. Payments / Raast P2M — PENDING
+14. B2B Water Club — PENDING
+15. Notifications — PENDING
+16. Website completion — PENDING
+17. SEO — PENDING
+18. Performance — PENDING
+19. Security — PENDING
+20. Legal/customer policies — PENDING
+21. Full testing — PENDING
+22. Staging/preview approval — PENDING
+23. Go live — PENDING
 
 ## Phase 1 Audit — 03 Oct 2026
 
@@ -67,4 +68,4 @@ Do not merge to `main` or make the redesign live until final approval and go-liv
 - B2B accounts may use separate contract-specific reward settings
 
 ## Immediate Next Phase
-Phase 4B: connect the Water Club authentication foundation to a trusted backend/ERP API. Required before Phase 4 can be marked complete: real customer lookup/linking, OTP verification provider, secure session handling, customer-scoped authorization, logout/recovery and protected dashboard access. Do not fake these controls in frontend JavaScript.
+Step 4B: connect the new same-repository Cloudflare Worker API foundation to the trusted central ERP backend. Implement customer lookup/linking, OTP provider integration, secure sessions, logout/recovery and protected customer-scoped dashboard access. The ERP remains the system of record. Do not deploy production /api/* routing or merge to main without final approval.
