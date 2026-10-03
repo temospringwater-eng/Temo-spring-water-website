@@ -1,52 +1,72 @@
-# TEMO Website Backend API Foundation
+# TEMO Website Backend API
 
-This directory contains the pre-launch Cloudflare Worker API scaffold for the TEMO Water Club website.
+This directory contains the pre-launch Cloudflare Worker API for the TEMO Water Club website.
 
-## Current status
+## Architecture
 
-Foundation only. It is intentionally **not** connected to the real ERP, OTP provider, customer database, payment provider or live Water Club accounts yet.
+The Worker is an adapter in front of the **existing TEMO ERP**. It does not create a second customer database or a second ERP.
 
-## Public foundation endpoints
+```
+Browser
+  ↓
+temospringwater.com/api/water-club/*
+  ↓
+Cloudflare Worker adapter
+  ↓
+Existing TEMO ERP customer/session APIs
+  ↓
+Existing ERP database
+```
 
-- `GET /api/health`
-- `GET /api/version`
+The ERP remains the system of record for customer identity, company scope, orders, recurring deliveries, payments and bottle balances.
 
-## Scaffolded Water Club routes
+## Current Step 4B status
 
-- `POST /api/water-club/auth/start`
-- `POST /api/water-club/auth/verify`
-- `POST /api/water-club/auth/logout`
-- `GET /api/water-club/me`
+Implemented in the preview branch:
+- `POST /api/water-club/auth/login` → ERP `/api/customer/login`
+- `POST /api/water-club/auth/logout` → ERP `/api/logout`
+- `GET /api/water-club/me` → ERP `/api/customer/me`
 - `GET /api/water-club/profile`
 - `PATCH /api/water-club/profile`
-- `POST /api/water-club/membership`
-- `GET /api/water-club/rewards`
-- `GET /api/water-club/deliveries`
-- `GET /api/water-club/referrals`
+- `GET /api/water-club/dashboard` → ERP customer dashboard
+- `GET /api/water-club/subscriptions`
 - `GET /api/water-club/bottles`
 
-Until Step 4B is implemented, scaffolded business/auth routes return HTTP 503 with `BACKEND_INTEGRATION_PENDING`. This prevents the frontend from pretending that authentication or customer data is live.
+A successful ERP customer login token is stored only in an HttpOnly, SameSite=Lax cookie by the Worker. The token is not returned to frontend JavaScript.
+
+## OTP
+
+Phone OTP routes remain fail-closed:
+- `POST /api/water-club/auth/start`
+- `POST /api/water-club/auth/verify`
+
+They return `OTP_PROVIDER_PENDING` until an approved provider is configured. No fake OTP is accepted.
+
+## Required configuration
+
+Set:
+
+```
+ERP_API_BASE_URL=https://<trusted-erp-host>
+```
+
+Production requires HTTPS for the ERP base URL.
+
+## Still pending before Step 4B can be called complete
+
+1. Deploy the trusted ERP backend to a reachable HTTPS host.
+2. Configure `ERP_API_BASE_URL` in the Worker environment.
+3. Route preview/test `/api/*` traffic to this Worker.
+4. Test valid/invalid customer login, logout, expired session and tenant isolation.
+5. Configure an approved phone OTP provider if passwordless login is required for launch.
+6. Run security/recovery tests.
 
 ## Security rules
 
-- Do not commit credentials or tokens.
-- Put real secrets in Cloudflare Worker secrets/environment bindings.
-- Keep the ERP as the system of record.
-- Never trust `customer_id` supplied only by the browser.
-- Real authentication must use backend-side verification and secure sessions.
-- OTP values must not be logged.
-- Production customer APIs must return `Cache-Control: no-store`.
-
-## Planned Step 4B
-
-Connect this Worker API to the trusted central ERP API for:
-1. customer lookup/linking
-2. OTP start/verify
-3. secure session creation
-4. authenticated `/me`
-5. logout/recovery
-6. customer-scoped dashboard data
-
-## Deployment rule
-
-Do not route production `/api/*` traffic to this Worker until Step 4B, security tests and final owner approval are complete.
+- No duplicate customer/session store in the website.
+- Do not commit credentials, tokens or `.env`.
+- Customer IDs are derived from the ERP-authenticated session.
+- Protected responses use `Cache-Control: no-store`.
+- Production cookies are `Secure`, `HttpOnly`, and `SameSite=Lax`.
+- OTP fails closed until configured.
+- Do not route production traffic or merge to `main` without final owner approval.
