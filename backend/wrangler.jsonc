@@ -1,0 +1,11 @@
+{
+  "name": "temo-water-club-api",
+  "main": "src/index.js",
+  "compatibility_date": "2026-10-01",
+  "workers_dev": true,
+  "vars": {
+    "APP_ENV": "preview",
+    "API_VERSION": "v1",
+    "ALLOWED_ORIGIN": "https://www.temospringwater.com"
+  }
+}
