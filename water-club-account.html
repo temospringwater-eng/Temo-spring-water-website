@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TEMO Water Club Member Dashboard Demo</title>
+<title>TEMO Water Club Member Dashboard — Preview</title>
 <meta name="robots" content="noindex,nofollow">
 <link rel="icon" type="image/x-icon" href="favicon.ico">
 <link rel="preload" href="inter-normal-400.woff" as="font" type="font/woff" crossorigin>
@@ -13,7 +13,6 @@
 <link rel="stylesheet" href="water-club.css">
 </head>
 <body class="premium-home water-club-page">
-
 <header class="p-header">
   <div class="p-container p-header-inner">
     <a href="/" class="p-brand">
@@ -27,7 +26,7 @@
       <a href="contact.html">Contact</a>
     </nav>
     <div class="p-header-actions">
-      <a class="p-btn p-btn--outline" href="water-club.html">Water Club</a>
+      <button class="p-btn p-btn--outline" type="button" id="wc-logout">Logout</button>
       <a class="p-btn p-btn--primary" href="https://wa.me/923106666369" target="_blank" rel="noopener">Contact TEMO</a>
     </div>
     <button class="p-menu nav-toggle" type="button" aria-label="Open menu" style="font-size:26px;">☰</button>
@@ -53,54 +52,41 @@
         <div class="wc-kicker" style="color:var(--wc-blue)">TEMO Water Club</div>
         <h1>Member Dashboard</h1>
       </div>
-      <div class="wc-demo-badge">Demo data only — no real customer account</div>
+      <div class="wc-demo-badge" id="wc-api-state">Checking secure member session…</div>
     </div>
 
     <div class="wc-dash-grid">
       <div class="wc-dash-main">
         <section class="wc-card">
-          <h2>Welcome, Sample Member</h2>
-          <p style="color:var(--wc-muted);margin-top:-6px;">Home Plan • Weekly delivery • Demo account</p>
+          <h2 id="wc-welcome">Welcome</h2>
+          <p id="wc-account-meta" style="color:var(--wc-muted);margin-top:-6px;">Loading your ERP customer account…</p>
           <div class="wc-stats">
-            <div class="wc-stat"><strong>65</strong><span>Reward points</span></div>
-            <div class="wc-stat"><strong>35</strong><span>Points to free 19L refill</span></div>
-            <div class="wc-stat"><strong>13</strong><span>Completed qualifying orders</span></div>
-            <div class="wc-stat"><strong>2</strong><span>Successful referrals</span></div>
-          </div>
-          <div style="margin-top:22px;">
-            <strong style="color:var(--wc-navy)">Progress to next reward</strong>
-            <div class="wc-progress" aria-label="65 of 100 points"><span></span></div>
-            <div style="display:flex;justify-content:space-between;color:var(--wc-muted);font-size:.78rem;"><span>65 points</span><span>100 = 1 free 19L refill</span></div>
+            <div class="wc-stat"><strong id="wc-orders">—</strong><span>Recent orders</span></div>
+            <div class="wc-stat"><strong id="wc-subscriptions">—</strong><span>Delivery plans</span></div>
+            <div class="wc-stat"><strong id="wc-bottles">—</strong><span>19L bottle balance</span></div>
+            <div class="wc-stat"><strong id="wc-outstanding">—</strong><span>Outstanding account</span></div>
           </div>
         </section>
 
         <section class="wc-card">
-          <h2>Next delivery</h2>
+          <h2>Delivery plan</h2>
           <div class="wc-delivery">
             <div>
-              <strong>2 × 19L bottles</strong>
-              <span>Sample schedule: Monday • 10:00 AM – 1:00 PM</span>
-              <span>Islamabad • exact address hidden in this demo</span>
+              <strong id="wc-next-product">No active schedule loaded</strong>
+              <span id="wc-next-schedule">—</span>
+              <span id="wc-address">—</span>
             </div>
-            <div class="wc-pill">Scheduled</div>
+            <div class="wc-pill" id="wc-plan-status">Pending</div>
           </div>
-          <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:16px;">
-            <a class="wc-btn wc-btn-primary" href="https://wa.me/923106666369" target="_blank" rel="noopener">Change delivery</a>
-            <a class="wc-btn" style="border-color:var(--wc-line);color:var(--wc-navy);background:#fff;" href="https://wa.me/923106666369" target="_blank" rel="noopener">Pause plan</a>
-          </div>
+          <p class="wc-note">This data comes from the existing ERP recurring-delivery/customer system. Water Club does not create a second customer record.</p>
         </section>
 
         <section class="wc-card">
-          <h2>Recent activity</h2>
+          <h2>Recent orders</h2>
           <div class="wc-table-wrap">
             <table class="wc-table">
-              <thead><tr><th>Date</th><th>Activity</th><th>Status</th><th>Points</th></tr></thead>
-              <tbody>
-                <tr><td>Demo</td><td>19L refill delivery</td><td>Delivered</td><td>+5</td></tr>
-                <tr><td>Demo</td><td>Referral completed</td><td>Verified</td><td>+20</td></tr>
-                <tr><td>Demo</td><td>19L refill delivery</td><td>Delivered</td><td>+5</td></tr>
-                <tr><td>Demo</td><td>First Water Club order</td><td>Delivered</td><td>+5 bonus</td></tr>
-              </tbody>
+              <thead><tr><th>Date</th><th>Order</th><th>Status</th><th>Amount</th></tr></thead>
+              <tbody id="wc-orders-body"><tr><td colspan="4">Loading…</td></tr></tbody>
             </table>
           </div>
         </section>
@@ -108,20 +94,14 @@
 
       <aside class="wc-dash-side">
         <section class="wc-card">
-          <h3>Your referral code</h3>
-          <p style="color:var(--wc-muted);font-size:.86rem;">Demo code for layout preview only.</p>
-          <div class="wc-referral-code">
-            <code id="demo-referral">TEMO-DEMO-001</code>
-            <button class="wc-copy-btn" type="button" id="copy-referral">Copy</button>
-          </div>
-          <p class="wc-note">A referral reward would only be credited after the referred customer's first paid delivery is verified.</p>
+          <h3>Rewards</h3>
+          <p style="color:var(--wc-muted);font-size:.86rem;line-height:1.6;">Customer-scoped Water Club rewards will be connected in the rewards phase. No demo points are shown as real data.</p>
         </section>
 
         <section class="wc-card">
           <h3>19L bottle ledger</h3>
           <div class="wc-bottle-ledger">
-            <div class="wc-ledger-item"><strong>2</strong><span>Bottles with customer</span></div>
-            <div class="wc-ledger-item"><strong>0</strong><span>Returns pending</span></div>
+            <div class="wc-ledger-item"><strong id="wc-bottle-ledger">—</strong><span>Current ERP balance</span></div>
           </div>
         </section>
 
@@ -134,11 +114,6 @@
             <a href="contact.html"><span>Get support</span><span>→</span></a>
           </div>
         </section>
-
-        <section class="wc-card">
-          <h3>Account plan</h3>
-          <p style="margin:0;color:var(--wc-muted);font-size:.86rem;line-height:1.6;">Home Plan<br>Weekly schedule<br>Reward points enabled<br>Referral benefits enabled</p>
-        </section>
       </aside>
     </div>
   </div>
@@ -148,7 +123,7 @@
   <div class="p-container">
     <div class="p-footer-bottom" style="margin-top:0;">
       <span>© 2026 TEMO Spring Water</span>
-      <span>Water Club Member Dashboard — Prototype</span>
+      <span>Water Club Member Dashboard — Preview branch</span>
     </div>
   </div>
 </footer>
@@ -156,18 +131,85 @@
 <script src="main.js"></script>
 <script src="premium-home.js"></script>
 <script>
-document.addEventListener("DOMContentLoaded",function(){
-  var btn=document.getElementById("copy-referral");
-  var code=document.getElementById("demo-referral");
-  if(btn&&code){
-    btn.addEventListener("click",function(){
-      var value=code.textContent;
-      if(navigator.clipboard){navigator.clipboard.writeText(value);}
-      btn.textContent="Copied";
-      setTimeout(function(){btn.textContent="Copy";},1400);
+(function(){
+  var state=document.getElementById("wc-api-state");
+  var money=function(value){return Number(value||0).toLocaleString("en-PK",{maximumFractionDigits:2})+" PKR";};
+  var text=function(id,value){var el=document.getElementById(id);if(el)el.textContent=value;};
+
+  async function loadDashboard(){
+    try{
+      var response=await fetch("/api/water-club/dashboard",{credentials:"same-origin",headers:{"accept":"application/json"}});
+      var payload={};
+      try{payload=await response.json();}catch(_){}
+      if(response.status===401){
+        window.location.replace("water-club-login.html");
+        return;
+      }
+      if(!response.ok||!payload.ok){
+        if(state)state.textContent=payload.message||"ERP connection is not configured on this preview yet.";
+        return;
+      }
+
+      var data=payload.data||{};
+      var customer=data.customer||{};
+      var orders=Array.isArray(data.orders)?data.orders:[];
+      var subscriptions=Array.isArray(data.subscriptions)?data.subscriptions:[];
+      var active=subscriptions.find(function(row){return row.status==="active";})||subscriptions[0]||null;
+
+      if(state)state.textContent="Secure ERP customer session active";
+      text("wc-welcome","Welcome, "+(customer.name||"TEMO Member"));
+      text("wc-account-meta",(customer.email||customer.phone||"Verified ERP customer account"));
+      text("wc-orders",String(orders.length));
+      text("wc-subscriptions",String(subscriptions.length));
+      text("wc-bottles",String(Number(data.bottleBalance||0)));
+      text("wc-bottle-ledger",String(Number(data.bottleBalance||0)));
+      text("wc-outstanding",money(data.account?.outstanding||0));
+      text("wc-address",customer.address||"Delivery address not set");
+
+      if(active){
+        text("wc-next-product",(active.quantity||"")+" × "+(active.product_name||"Water delivery"));
+        text("wc-next-schedule",(active.frequency||"Schedule")+" • Next due "+(active.next_due_date||"TBD"));
+        text("wc-plan-status",active.status||"active");
+      }else{
+        text("wc-next-product","No recurring delivery plan");
+        text("wc-next-schedule","Join or configure a Water Club delivery schedule");
+        text("wc-plan-status","Not active");
+      }
+
+      var tbody=document.getElementById("wc-orders-body");
+      if(tbody){
+        tbody.textContent="";
+        if(!orders.length){
+          var tr=document.createElement("tr"),td=document.createElement("td");
+          td.colSpan=4;td.textContent="No recent orders found.";tr.appendChild(td);tbody.appendChild(tr);
+        }else{
+          orders.slice(0,10).forEach(function(order){
+            var tr=document.createElement("tr");
+            [
+              String(order.created_at||"").slice(0,10)||"—",
+              "#"+String(order.id||"—"),
+              order.status||"—",
+              money(order.total_amount||0)
+            ].forEach(function(value){var td=document.createElement("td");td.textContent=value;tr.appendChild(td);});
+            tbody.appendChild(tr);
+          });
+        }
+      }
+    }catch(_){
+      if(state)state.textContent="Water Club API preview is not reachable yet.";
+    }
+  }
+
+  var logout=document.getElementById("wc-logout");
+  if(logout){
+    logout.addEventListener("click",async function(){
+      logout.disabled=true;
+      try{await fetch("/api/water-club/auth/logout",{method:"POST",credentials:"same-origin"});}catch(_){}
+      window.location.replace("water-club-login.html");
     });
   }
-});
+  loadDashboard();
+})();
 </script>
 </body>
 </html>
