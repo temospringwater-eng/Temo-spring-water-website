@@ -1,58 +1,39 @@
-# Step 4B — ERP Integration Blocker
+# Step 4B — ERP Source Status
 
 Date: 2026-10-04
+Status: SOURCE BLOCKER RESOLVED FOR DEVELOPMENT
 
-## What was verified
-Connected GitHub repository:
-- `temospringwater-eng/Temo-ERP`
-- visibility: private
-- default branch: `main`
-- only branch currently visible: `main`
+## Resolution
+The complete current TEMO-AQUAFLOW project was supplied as an uploaded ZIP. It contains the previously missing runtime source directories:
+- `services/`
+- `public/`
+- `tests/`
+- `docs/`
 
-The repository contains `server.js`, `package.json`, SQLite database files and documentation.
+The ZIP also contains local-only material such as `.env`, `node_modules` and SQLite/debug database files. These must **not** be copied into the website repository or committed as integration secrets/artifacts.
 
-## Important finding
-The current `server.js` imports project files such as:
-- `services/subscription-service`
-- `services/notification-delivery-service`
-- other `services/*` modules
-
-It also references the customer portal/public application and the package test command expects `tests/*.test.js`.
-
-However, on the connected GitHub `main` branch:
-- `services/` is not present
-- `public/` is not present
-- `tests/` is not present
-
-Representative checks:
-- `services/subscription-service.js` — not found
-- `services/notification-delivery-service.js` — not found
-- `public/customer.html` — not found
-- `tests/step7.test.js` — not found
-
-Therefore the connected GitHub repository is not a complete copy of the current ERP application and cannot be safely used as the authoritative source for Step 4B implementation/testing.
-
-## Existing ERP capabilities observed in server.js
-The available `server.js` already shows useful APIs/features:
-- customer login and sessions
-- customer profile/dashboard/orders/payments/subscriptions
+## Existing ERP capabilities confirmed
+The current ERP source already provides:
+- customer login and ERP sessions
+- tenant/customer-scoped profile and dashboard APIs
+- recurring delivery subscriptions
 - bottle balance
-- delivery subscriptions
-- deliveries and driver flows
-- loyalty accounts
-- referral codes/referrals
-- audit logs
-- multi-company `company_id` scoping
+- orders, payments and complaints
+- loyalty and referral infrastructure
+- driver/delivery workflows
+- audit logs and company isolation
 
-These should be reused rather than duplicated once the complete ERP source is available.
+The Water Club implementation therefore reuses these existing ERP systems instead of creating duplicate customer/session stores.
 
-## Required unblock
-Before Step 4B coding:
-1. Sync/push the complete current ERP source to `temospringwater-eng/Temo-ERP`.
-2. Include the current `services/`, `public/`, `tests/` and any other runtime source directories.
-3. Do NOT upload `.env`, API keys, passwords or other secrets.
-4. Database files are not needed for code integration and should preferably remain out of future source commits.
-5. After source sync, re-audit the exact customer/auth/session APIs and implement the website Worker ↔ ERP adapter on separate branches.
+## Current Step 4B implementation
+The website Cloudflare Worker adapter now maps Water Club member auth/dashboard routes to the existing ERP customer portal APIs. The ERP session token is held in an HttpOnly cookie at the website layer.
+
+## Still pending
+- Complete GitHub source synchronization for the ERP project can be done separately without creating another ERP repository or app.
+- A reachable HTTPS ERP deployment URL is required for live preview integration.
+- Worker environment configuration and preview routing are required.
+- OTP provider integration remains intentionally disabled.
+- Authentication/tenant-isolation tests must pass before production.
 
 ## Go-live rule
-No production API routing, ERP deployment, website merge to `main`, or Water Club go-live is authorized by this document.
+No production API routing, ERP deployment, website merge to `main`, or Water Club go-live is authorized by this document. Final owner approval is mandatory.
