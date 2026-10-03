@@ -11,7 +11,7 @@ Do not merge to `main` or make the redesign live until final approval and go-liv
 2. Water Club business rules — COMPLETE
 3. Customer journey — COMPLETE
 4. Website backend API foundation — COMPLETE
-5. Real member account/auth — FOUNDATION READY / BACKEND CONNECTION PENDING
+5. Real member account/auth — FOUNDATION READY / STEP 4B BLOCKED BY INCOMPLETE ERP REPO
 6. Subscription & delivery engine — PENDING
 7. Rewards engine — PENDING
 8. Referral system — PENDING
@@ -68,4 +68,4 @@ Do not merge to `main` or make the redesign live until final approval and go-liv
 - B2B accounts may use separate contract-specific reward settings
 
 ## Immediate Next Phase
-Step 4B: connect the new same-repository Cloudflare Worker API foundation to the trusted central ERP backend. Implement customer lookup/linking, OTP provider integration, secure sessions, logout/recovery and protected customer-scoped dashboard access. The ERP remains the system of record. Do not deploy production /api/* routing or merge to main without final approval.
+Step 4B is temporarily BLOCKED: the connected `temospringwater-eng/Temo-ERP` main branch is missing runtime source directories referenced by `server.js` (`services/`, `public/`, and `tests/`). Sync the complete current ERP source to GitHub first, without secrets. Then re-audit and connect the website Cloudflare Worker API to the ERP customer/auth/session APIs. Do not deploy production /api/* routing or merge to main without final approval.
