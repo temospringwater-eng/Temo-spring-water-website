@@ -10,7 +10,7 @@ Do not merge to `main` or make the redesign live until final approval and go-liv
 1. Current branch audit — COMPLETE
 2. Water Club business rules — COMPLETE
 3. Customer journey — COMPLETE
-4. Real member account/auth — NEXT
+4. Real member account/auth — FOUNDATION READY / BACKEND PENDING
 5. Subscription & delivery engine — PENDING
 6. Rewards engine — PENDING
 7. Referral system — PENDING
@@ -67,4 +67,4 @@ Do not merge to `main` or make the redesign live until final approval and go-liv
 - B2B accounts may use separate contract-specific reward settings
 
 ## Immediate Next Phase
-Phase 4: design and implement the real member account/authentication foundation: customer identity, signup/login, duplicate-customer handling, OTP/recovery strategy, session security and customer-scoped dashboard access. No production launch is authorized.
+Phase 4B: connect the Water Club authentication foundation to a trusted backend/ERP API. Required before Phase 4 can be marked complete: real customer lookup/linking, OTP verification provider, secure session handling, customer-scoped authorization, logout/recovery and protected dashboard access. Do not fake these controls in frontend JavaScript.
