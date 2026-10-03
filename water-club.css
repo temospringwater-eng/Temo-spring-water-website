@@ -163,3 +163,22 @@ body.water-club-page{margin:0;background:#fff;color:var(--wc-ink);font-family:'I
   .wc-delivery{grid-template-columns:1fr}
   .wc-bottle-ledger{grid-template-columns:1fr}
 }
+
+
+/* auth prototype */
+.wc-auth-shell{min-height:calc(100vh - 90px);display:grid;place-items:center;padding:72px 20px;background:linear-gradient(180deg,#f7fbff,#edf7ff)}
+.wc-auth-card{width:min(560px,100%);background:#fff;border:1px solid var(--wc-line);border-radius:28px;padding:34px;box-shadow:var(--wc-shadow)}
+.wc-auth-logo{display:flex;justify-content:center;margin-bottom:22px}
+.wc-auth-logo img{width:150px;height:auto}
+.wc-auth-card h1{margin:8px 0 10px;text-align:center;color:var(--wc-navy);font-size:clamp(2rem,5vw,2.8rem);letter-spacing:-.035em}
+.wc-auth-card>p{text-align:center;color:var(--wc-muted);line-height:1.6;margin:0 0 24px}
+.wc-auth-form{display:grid;gap:16px}
+.wc-auth-field{display:grid;gap:7px}
+.wc-auth-field label{font-size:.82rem;font-weight:800;color:var(--wc-navy)}
+.wc-auth-field input{width:100%;box-sizing:border-box;border:1px solid rgba(6,43,83,.18);border-radius:14px;padding:14px 15px;font:inherit}
+.wc-auth-field input:focus{outline:3px solid rgba(11,91,211,.13);border-color:var(--wc-blue)}
+.wc-auth-alert{margin-top:16px;padding:14px 16px;border-radius:14px;background:#fff8e8;border:1px solid #efd89b;color:#6d5610;font-size:.82rem;line-height:1.55}
+.wc-auth-status{display:none;margin-top:16px;padding:14px 16px;border-radius:14px;background:#eef8ff;border:1px solid #cce8f7;color:#2d536f;font-size:.84rem;line-height:1.55}
+.wc-auth-status.show{display:block}
+.wc-auth-links{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-top:20px;font-size:.84rem}
+.wc-auth-links a{color:var(--wc-blue);font-weight:800}
