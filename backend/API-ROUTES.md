@@ -1,5 +1,12 @@
 # TEMO Water Club API Routes v1
 
+## Architecture
+The website Worker does **not** create a second customer or session database. It reuses the existing TEMO ERP customer portal, customer records, company scope and ERP session table.
+
+Browser → Website Worker → Existing ERP customer APIs
+
+The Worker keeps the ERP session token out of browser JavaScript by storing it in an HttpOnly cookie.
+
 ## Foundation
 | Method | Route | Current |
 |---|---|---|
@@ -7,26 +14,41 @@
 | GET | /api/version | implemented |
 
 ## Authentication
-| Method | Route | Purpose |
+| Method | Route | Current / Purpose |
 |---|---|---|
-| POST | /api/water-club/auth/start | Start phone verification |
-| POST | /api/water-club/auth/verify | Verify OTP and create session |
-| POST | /api/water-club/auth/logout | Invalidate session |
-| GET | /api/water-club/me | Return authenticated member identity |
+| POST | /api/water-club/auth/login | implemented adapter → ERP /api/customer/login |
+| POST | /api/water-club/auth/logout | implemented adapter → ERP /api/logout |
+| GET | /api/water-club/me | implemented adapter → ERP /api/customer/me |
+| POST | /api/water-club/auth/start | OTP reserved; provider pending |
+| POST | /api/water-club/auth/verify | OTP reserved; provider pending |
 
-## Profile & membership
-| Method | Route | Purpose |
+The Worker does not return the ERP session token to frontend JavaScript. A successful customer login sets an HttpOnly, SameSite=Lax session cookie.
+
+## Profile & dashboard
+| Method | Route | Current / ERP source |
 |---|---|---|
-| GET | /api/water-club/profile | Member profile |
-| PATCH | /api/water-club/profile | Allowed profile updates |
-| POST | /api/water-club/membership | Create/activate Water Club membership |
+| GET | /api/water-club/profile | implemented → /api/customer/me |
+| PATCH | /api/water-club/profile | implemented → /api/customer/profile |
+| GET | /api/water-club/dashboard | implemented → /api/customer/dashboard |
+| GET | /api/water-club/subscriptions | implemented → /api/customer/subscriptions |
+| GET | /api/water-club/bottles | implemented → /api/customer/bottle-balance |
 
-## Member data
-| Method | Route | Purpose |
+## Later Water Club phases
+| Method | Route | Status |
 |---|---|---|
-| GET | /api/water-club/rewards | Rewards ledger/summary |
-| GET | /api/water-club/deliveries | Delivery schedule/history |
-| GET | /api/water-club/referrals | Referral status |
-| GET | /api/water-club/bottles | 19L bottle ledger |
+| POST | /api/water-club/membership | pending membership engine |
+| GET | /api/water-club/rewards | pending customer-scoped rewards adapter |
+| GET | /api/water-club/deliveries | pending delivery adapter |
+| GET | /api/water-club/referrals | pending customer-scoped referral adapter |
 
-All business/auth routes are scaffold-only until Step 4B.
+## Required configuration
+Set `ERP_API_BASE_URL` in the Worker environment to the trusted deployed TEMO ERP backend. In production the adapter rejects a non-HTTPS ERP base URL.
+
+## Security
+- ERP remains the system of record.
+- No duplicate customer/session store is created in the website Worker.
+- ERP session tokens are kept in HttpOnly cookies and are not returned to frontend JS.
+- Protected API responses use `Cache-Control: no-store`.
+- Customer identity comes from the authenticated ERP session; browser-supplied customer IDs are not trusted.
+- OTP is fail-closed until a provider is explicitly configured.
+- Production routing remains disabled until testing and final owner approval.
