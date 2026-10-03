@@ -70,6 +70,7 @@
 :root{ --deep: #0A3A5C; --deep-2: #062744; --ink: #0B2536; --aqua: #17A9BE; --aqua-deep: #0E8699; --aqua-light: #7FDCE6; --ice: #F4FAFB; --foam: #E1F2F4; --foam-2: #CDE9EC; --white: #FFFFFF; --line: rgba(10,58,92,0.12); --line-light: rgba(255,255,255,0.22); --shadow-soft: 0 20px 50px -25px rgba(6,39,68,0.35); --font-display: 'Fraunces', serif; --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; --max: 1180px; --pad: clamp(20px, 5vw, 64px); --radius-lg: 22px; --radius-md: 14px; --radius-sm: 8px; --wa-number: 923106666369; }
 </style>
 <link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="premium-home.css">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -110,8 +111,7 @@
 }
 </script>
 </head>
-<body>
-
+<body class="premium-home">
 <svg style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true" focusable="false">
 <defs>
 <linearGradient id="bottleGrad" x1="0" y1="0" x2="0" y2="1">
@@ -165,237 +165,295 @@
 </defs>
 </svg>
 
-<!-- ============ HEADER ============ -->
-<header class="site-header">
-  <a href="/" class="logo">
-    <img src="logo-icon-192.webp" alt="TEMO Spring Water" class="logo-mark" width="42" height="42" srcset="logo-icon-64.webp 64w, logo-icon-128.webp 128w, logo-icon-192.webp 192w">
-    <span class="logo-text"><span class="name">TEMO</span><span class="sub">SPRING WATER</span></span>
-  </a>
-  <nav class="main-nav">
-    <a href="/">Home</a>
-    <a href="products.html">Products</a>
-    <a href="about.html">About us</a>
-    <a href="quality.html">Quality</a>
-    <a href="business.html">Business solutions</a>
-    <a href="dealer.html">Become a dealer</a>
-    <a href="contact.html">Contact</a>
-  </nav>
-  <div class="header-cta">
-    <a class="btn btn-primary" data-wa-msg="Assalam-o-Alaikum, I want to place an order with TEMO Spring Water. Please share availability and delivery details." target="_blank" rel="noopener">
-      <svg><use href="#i-wa" xlink:href="#i-wa"/></svg> Order now
+<header class="p-header">
+  <div class="p-container p-header-inner">
+    <a href="/" class="p-brand" aria-label="TEMO Spring Water home">
+      <img src="logo-full-320.webp" alt="TEMO Spring Water" width="320" height="112" decoding="async" onerror="this.onerror=null;this.src='logo-full.png';">
     </a>
+
+    <nav class="p-nav main-nav" aria-label="Main navigation">
+      <a href="/" class="active">Home</a>
+      <a href="about.html">About</a>
+      <a href="products.html">Products</a>
+      <a href="business.html">Business (B2B)</a>
+      <a href="quality.html">Quality</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+
+    <div class="p-header-actions">
+      <a class="p-phone" href="https://wa.me/923106666369" target="_blank" rel="noopener" aria-label="WhatsApp +92 310 6666369">
+        <svg width="18" height="18"><use href="#i-wa" xlink:href="#i-wa"/></svg>
+        +92 310 6666369
+      </a>
+      <a class="p-btn p-btn--primary" href="https://wa.me/923106666369" data-wa-msg="Assalam-o-Alaikum, I want to place an order with TEMO Spring Water. Please share availability and delivery details." target="_blank" rel="noopener">Order now →</a>
+    </div>
+
+    <button class="p-menu nav-toggle" type="button" aria-label="Open menu">
+      <svg><use href="#i-menu" xlink:href="#i-menu"/></svg>
+    </button>
   </div>
-  <button class="nav-toggle" aria-label="Open menu"><svg><use href="#i-menu" xlink:href="#i-menu"/></svg></button>
 </header>
 
 <div class="mobile-nav">
   <div class="mobile-nav-top">
-    <a href="/" class="logo">
-      <img src="logo-icon-192.webp" alt="TEMO Spring Water" class="logo-mark" width="42" height="42">
-      <span class="logo-text"><span class="name">TEMO</span><span class="sub">SPRING WATER</span></span>
+    <a href="/" class="p-brand">
+      <img src="logo-full-320.webp" alt="TEMO Spring Water" width="320" height="112" onerror="this.onerror=null;this.src='logo-full.png';">
     </a>
-    <button class="mobile-close" aria-label="Close menu"><svg><use href="#i-close" xlink:href="#i-close"/></svg></button>
+    <button class="mobile-close" type="button" aria-label="Close menu">&times;</button>
   </div>
   <a href="/">Home</a>
+  <a href="about.html">About</a>
   <a href="products.html">Products</a>
-  <a href="about.html">About us</a>
+  <a href="business.html">Business (B2B)</a>
   <a href="quality.html">Quality</a>
-  <a href="business.html">Business solutions</a>
   <a href="dealer.html">Become a dealer</a>
   <a href="contact.html">Contact</a>
-  <a class="btn btn-primary" data-wa-msg="Assalam-o-Alaikum, I want to place an order with TEMO Spring Water. Please share availability and delivery details." target="_blank" rel="noopener"><svg><use href="#i-wa" xlink:href="#i-wa"/></svg> Order on WhatsApp</a>
+  <a class="p-btn p-btn--primary" href="https://wa.me/923106666369" data-wa-msg="Assalam-o-Alaikum, I want to place an order with TEMO Spring Water. Please share availability and delivery details." target="_blank" rel="noopener">Order on WhatsApp</a>
 </div>
 
-<section class="hero">
-  <div class="hero-bg">
-    <div class="hero-glow"></div>
-    <div class="bubble"></div>
-    <div class="bubble"></div>
-    <div class="bubble"></div>
-  </div>
-  <div class="container hero-content">
-    <h1>Pure water for pure life</h1>
-    <p class="lede">TEMO Spring Water — trusted bottled drinking water for homes, offices and businesses across Islamabad and Rawalpindi.</p>
-    <div class="hero-actions">
-      <a href="products.html" class="btn btn-primary">Shop now</a>
-      <a href="business.html" class="btn btn-outline">B2B &amp; business supply</a>
-    </div>
-  </div>
-</section>
-
-<section class="section section--ice">
-  <div class="container">
-    <div class="section-head center">
-      <div class="eyebrow">What we offer</div>
-      <h2>Three sizes, one mission</h2>
-      <p>Pure, reliable drinking water in formats that work for every need.</p>
-    </div>
-    <div class="three-col" style="margin-top:60px;">
-      <div class="card">
-        <div style="height:140px; display:flex; align-items:center; justify-content:center; margin:-20px -20px 20px;">
-          <img src="bottle-19l-poster-160.webp" alt="TEMO 19L" style="height:100%; width:auto; object-fit:contain;">
+<main>
+  <section class="p-hero">
+    <div class="p-container p-hero-inner">
+      <div class="p-hero-copy">
+        <div class="p-eyebrow">Natural bottled drinking water</div>
+        <h1>Pure Water.<br>Pure <span>Life.</span></h1>
+        <p class="p-hero-lede">Trusted bottled drinking water for homes, offices and businesses across Islamabad and Rawalpindi — with reliable supply, B2B support and customized labels available on request.</p>
+        <div class="p-hero-actions">
+          <a class="p-btn p-btn--primary" href="https://wa.me/923106666369" data-wa-msg="Assalam-o-Alaikum, I want to order TEMO Spring Water. Please share product availability and delivery details." target="_blank" rel="noopener">Order now →</a>
+          <a class="p-btn p-btn--light" href="business.html">Business supply →</a>
         </div>
-        <h3 style="font-size:1.4rem; margin:0 0 8px;">19L</h3>
-        <p style="color:#3C5A6B; margin:0; font-size:0.95rem;">For homes &amp; offices</p>
-        <a href="products.html#product-19l" style="display:inline-block; margin-top:16px; color:var(--aqua-deep); font-weight:600; font-size:0.9rem;">Learn more →</a>
       </div>
-      <div class="card">
-        <div style="height:140px; display:flex; align-items:center; justify-content:center; margin:-20px -20px 20px;">
-          <img src="bottle-1-5l-160.webp" alt="TEMO 1.5L" style="height:100%; width:auto; object-fit:contain;">
+
+      <aside class="p-hero-card" aria-label="TEMO Spring Water">
+        <img src="bottle-19l-poster-640.webp" alt="TEMO Spring Water 19 litre bottle" width="640" height="640" fetchpriority="high">
+        <strong>TEMO Spring Water</strong>
+        <span>19L • 1.5L • 500ml • B2B supply</span>
+      </aside>
+    </div>
+  </section>
+
+  <div class="p-trust-strip">
+    <div class="p-container p-trust-grid">
+      <div class="p-trust-item">
+        <div class="p-trust-icon"><svg><use href="#i-droplet" xlink:href="#i-droplet"/></svg></div>
+        <div><strong>Pure &amp; refreshing</strong><span>Water for everyday hydration</span></div>
+      </div>
+      <div class="p-trust-item">
+        <div class="p-trust-icon"><svg><use href="#i-shield" xlink:href="#i-shield"/></svg></div>
+        <div><strong>Quality focused</strong><span>Consistent safety standards</span></div>
+      </div>
+      <div class="p-trust-item">
+        <div class="p-trust-icon"><svg><use href="#i-truck" xlink:href="#i-truck"/></svg></div>
+        <div><strong>Reliable supply</strong><span>Homes, offices &amp; businesses</span></div>
+      </div>
+      <div class="p-trust-item">
+        <div class="p-trust-icon"><svg><use href="#i-building" xlink:href="#i-building"/></svg></div>
+        <div><strong>B2B ready</strong><span>Bulk orders &amp; custom labels</span></div>
+      </div>
+    </div>
+  </div>
+
+  <section class="p-section p-section--soft" id="products">
+    <div class="p-container">
+      <div class="p-section-head">
+        <div>
+          <div class="p-eyebrow">Our products</div>
+          <h2>Water for every need</h2>
+          <p>Three convenient formats for home delivery, everyday hydration and on-the-go use.</p>
         </div>
-        <h3 style="font-size:1.4rem; margin:0 0 8px;">1.5L</h3>
-        <p style="color:#3C5A6B; margin:0; font-size:0.95rem;">For everyday use</p>
-        <a href="products.html#product-1-5l" style="display:inline-block; margin-top:16px; color:var(--aqua-deep); font-weight:600; font-size:0.9rem;">Learn more →</a>
+        <a class="p-link" href="products.html">View all products →</a>
       </div>
-      <div class="card">
-        <div style="height:140px; display:flex; align-items:center; justify-content:center; margin:-20px -20px 20px;">
-          <img src="bottle-500ml-a-160.webp" alt="TEMO 500ml" style="height:100%; width:auto; object-fit:contain;">
+
+      <div class="p-products">
+        <article class="p-product">
+          <div class="p-product-media"><img src="bottle-19l-poster-320.webp" alt="TEMO 19L bottle" width="320" height="320" loading="lazy"></div>
+          <div class="p-product-tag">Home &amp; office</div>
+          <h3>19L Bottle</h3>
+          <p>Large-format drinking water for homes, offices and regular supply.</p>
+          <div class="p-price">PKR 450</div>
+          <div class="p-meta">
+            <span><i class="p-dot"></i>Bottle security: PKR 1,200</span>
+            <span><i class="p-dot"></i>Refill: PKR 300</span>
+          </div>
+          <a class="p-btn p-btn--primary" href="https://wa.me/923106666369" data-wa-msg="Assalam-o-Alaikum, I want to order TEMO 19L Spring Water. Please share delivery details." target="_blank" rel="noopener">Order 19L →</a>
+        </article>
+
+        <article class="p-product">
+          <div class="p-product-media"><img src="bottle-1-5l-223.webp" alt="TEMO 1.5L bottle" width="223" height="480" loading="lazy"></div>
+          <div class="p-product-tag">Everyday hydration</div>
+          <h3>1.5L Bottle</h3>
+          <p>Convenient bottled water for meetings, travel and daily use.</p>
+          <div class="p-price">PKR 100</div>
+          <div class="p-meta">
+            <span><i class="p-dot"></i>6 bottles per carton</span>
+            <span><i class="p-dot"></i>Business quantities available</span>
+          </div>
+          <a class="p-btn p-btn--primary" href="https://wa.me/923106666369" data-wa-msg="Assalam-o-Alaikum, I want to order TEMO 1.5L Spring Water. Please share delivery details." target="_blank" rel="noopener">Order 1.5L →</a>
+        </article>
+
+        <article class="p-product">
+          <div class="p-product-media"><img src="bottle-500ml-a-287.webp" alt="TEMO 500ml bottle" width="287" height="480" loading="lazy"></div>
+          <div class="p-product-tag">On the go</div>
+          <h3>500ml Bottle</h3>
+          <p>Compact bottled water for travel, meetings, events and quick hydration.</p>
+          <div class="p-price">PKR 50</div>
+          <div class="p-meta">
+            <span><i class="p-dot"></i>12 bottles per carton</span>
+            <span><i class="p-dot"></i>Event &amp; B2B quantities available</span>
+          </div>
+          <a class="p-btn p-btn--primary" href="https://wa.me/923106666369" data-wa-msg="Assalam-o-Alaikum, I want to order TEMO 500ml Spring Water. Please share delivery details." target="_blank" rel="noopener">Order 500ml →</a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="p-section">
+    <div class="p-container p-b2b-grid">
+      <article class="p-b2b-card p-b2b-dark">
+        <div class="p-eyebrow" style="color:#8fdcff">Business (B2B) supply</div>
+        <h2>Reliable water supply for your business</h2>
+        <p>For offices, restaurants, hotels, schools, institutions, retailers, distributors and events. Tell us your volume and schedule, and our sales team can prepare a tailored quotation.</p>
+        <div class="p-audiences">
+          <div class="p-audience">Offices</div>
+          <div class="p-audience">Restaurants</div>
+          <div class="p-audience">Events</div>
+          <div class="p-audience">Institutions</div>
         </div>
-        <h3 style="font-size:1.4rem; margin:0 0 8px;">500ml</h3>
-        <p style="color:#3C5A6B; margin:0; font-size:0.95rem;">On-the-go hydration</p>
-        <a href="products.html#product-500ml" style="display:inline-block; margin-top:16px; color:var(--aqua-deep); font-weight:600; font-size:0.9rem;">Learn more →</a>
-      </div>
-    </div>
-  </div>
-</section>
+        <a class="p-btn p-btn--light" href="business.html#quote-form">Request a B2B quote →</a>
+      </article>
 
-<section class="section section--deep">
-  <div class="container section-head center">
-    <div class="eyebrow" style="color:var(--aqua-light);">Why TEMO</div>
-    <h2>Quality you can trust</h2>
-    <p>Every bottle carries our commitment to purity, consistency and genuine care.</p>
-  </div>
-  <div class="container" style="margin-top:60px;">
-    <div class="three-col">
-      <div style="text-align:center;">
-        <svg style="width:48px; height:48px; color:var(--aqua-light); margin:0 auto 16px;"><use href="#i-shield" xlink:href="#i-shield"/></svg>
-        <h3 style="color:#fff; font-size:1.2rem;">Reliable quality</h3>
-        <p style="color:#BBD9E1; margin-top:12px;">Multi-stage purification and rigorous testing at every step.</p>
-      </div>
-      <div style="text-align:center;">
-        <svg style="width:48px; height:48px; color:var(--aqua-light); margin:0 auto 16px;"><use href="#i-truck" xlink:href="#i-truck"/></svg>
-        <h3 style="color:#fff; font-size:1.2rem;">On-time delivery</h3>
-        <p style="color:#BBD9E1; margin-top:12px;">Scheduled delivery that works with your schedule.</p>
-      </div>
-      <div style="text-align:center;">
-        <svg style="width:48px; height:48px; color:var(--aqua-light); margin:0 auto 16px;"><use href="#i-heart" xlink:href="#i-heart"/></svg>
-        <h3 style="color:#fff; font-size:1.2rem;">Genuine care</h3>
-        <p style="color:#BBD9E1; margin-top:12px;">We're here to support you — every bottle, every order.</p>
-      </div>
+      <article class="p-b2b-card p-custom">
+        <div class="p-eyebrow">Custom branding</div>
+        <h2>Customized labels</h2>
+        <p>Need bottles for your brand, company, event or campaign? Customized labels are available on request for eligible bulk orders.</p>
+        <div class="p-custom-list">
+          <span><i class="p-check">✓</i>Your logo or design</span>
+          <span><i class="p-check">✓</i>Corporate &amp; event orders</span>
+          <span><i class="p-check">✓</i>Branding and promotional use</span>
+        </div>
+        <a class="p-btn p-btn--primary" href="contact.html">Ask about custom labels →</a>
+      </article>
     </div>
-  </div>
-</section>
+  </section>
 
-<section class="section section--white">
-  <div class="container">
-    <div class="section-head center">
-      <div class="eyebrow">How we work</div>
-      <h2>Simple &amp; straightforward</h2>
+  <section class="p-section p-section--soft">
+    <div class="p-container p-cert-wrap">
+      <article class="p-cert-panel">
+        <div class="p-eyebrow">Quality &amp; certification</div>
+        <h2 style="font-size:clamp(1.9rem,4vw,2.7rem);margin:10px 0 0;color:var(--temo-navy)">Standards you can trust</h2>
+        <p style="color:var(--temo-muted);line-height:1.7">TEMO's quality positioning is supported by recognized food-safety and quality-management standards.</p>
+        <div class="p-cert-badges">
+          <div class="p-cert"><div><strong>HALAL</strong><span>Certified</span></div></div>
+          <div class="p-cert"><div><strong>ISO 9001</strong><span>Quality management</span></div></div>
+          <div class="p-cert"><div><strong>ISO 22000</strong><span>Food safety</span></div></div>
+        </div>
+      </article>
+
+      <article class="p-nature">
+        <h3>Naturally focused. Responsibly delivered.</h3>
+      </article>
     </div>
-    <div class="three-col" style="margin-top:60px; text-align:center;">
+  </section>
+
+  <section class="p-section">
+    <div class="p-container">
+      <div class="p-section-head">
+        <div>
+          <div class="p-eyebrow">Why TEMO</div>
+          <h2>More than just water</h2>
+          <p>A practical bottled-water partner for households, workplaces, businesses and events.</p>
+        </div>
+      </div>
+
+      <div class="p-why">
+        <div class="p-why-card">
+          <div class="p-why-icon"><svg><use href="#i-droplet" xlink:href="#i-droplet"/></svg></div>
+          <h3>Pure &amp; refreshing</h3>
+          <p>Clean, convenient drinking water for everyday use.</p>
+        </div>
+        <div class="p-why-card">
+          <div class="p-why-icon"><svg><use href="#i-shield" xlink:href="#i-shield"/></svg></div>
+          <h3>Quality focused</h3>
+          <p>Consistent quality and safety remain central to every bottle.</p>
+        </div>
+        <div class="p-why-card">
+          <div class="p-why-icon"><svg><use href="#i-truck" xlink:href="#i-truck"/></svg></div>
+          <h3>Reliable service</h3>
+          <p>Simple ordering and dependable supply for recurring needs.</p>
+        </div>
+        <div class="p-why-card">
+          <div class="p-why-icon"><svg><use href="#i-building" xlink:href="#i-building"/></svg></div>
+          <h3>Built for business</h3>
+          <p>B2B quotations, bulk supply and custom-label support.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="p-cta">
+    <div class="p-container p-cta-inner">
       <div>
-        <div style="width:48px; height:48px; background:var(--foam); border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 16px; font-weight:700; font-size:1.4rem; color:var(--aqua-deep);">1</div>
-        <h3 style="font-size:1.1rem;">Choose your size</h3>
-        <p style="color:#3C5A6B; margin-top:8px;">Pick the format that works for you.</p>
+        <h2>Let's stay in touch</h2>
+        <p>Need an order, business quotation or customized labels? Contact TEMO directly.</p>
+      </div>
+      <div class="p-cta-actions">
+        <a class="p-btn p-btn--wa" href="https://wa.me/923106666369" data-wa-msg="Assalam-o-Alaikum, I am contacting TEMO Spring Water from the website." target="_blank" rel="noopener">Chat on WhatsApp →</a>
+        <a class="p-btn p-btn--outline" href="contact.html">Contact us →</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="p-footer">
+  <div class="p-container">
+    <div class="p-footer-grid">
+      <div>
+        <a href="/" class="p-brand"><img src="logo-full-320.webp" alt="TEMO Spring Water" width="320" height="112" onerror="this.onerror=null;this.src='logo-full.png';"></a>
+        <p>Pure water. Pure life. Bottled drinking water for homes, offices and businesses across Islamabad and Rawalpindi.</p>
       </div>
       <div>
-        <div style="width:48px; height:48px; background:var(--foam); border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 16px; font-weight:700; font-size:1.4rem; color:var(--aqua-deep);">2</div>
-        <h3 style="font-size:1.1rem;">Place your order</h3>
-        <p style="color:#3C5A6B; margin-top:8px;">Quick and easy — WhatsApp or contact us.</p>
+        <h4>Quick links</h4>
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="products.html">Products</a></li>
+          <li><a href="business.html">Business (B2B)</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
       </div>
       <div>
-        <div style="width:48px; height:48px; background:var(--foam); border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 16px; font-weight:700; font-size:1.4rem; color:var(--aqua-deep);">3</div>
-        <h3 style="font-size:1.1rem;">Get delivered</h3>
-        <p style="color:#3C5A6B; margin-top:8px;">We handle the rest, on your schedule.</p>
+        <h4>Our products</h4>
+        <ul>
+          <li><a href="products.html">19L Bottle</a></li>
+          <li><a href="products.html">1.5L Bottle</a></li>
+          <li><a href="products.html">500ml Bottle</a></li>
+          <li><a href="dealer.html">Dealer program</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contact us</h4>
+        <ul>
+          <li><a href="tel:+923106666369">+92 310 6666369</a></li>
+          <li><a href="mailto:temospringwater@gmail.com">temospringwater@gmail.com</a></li>
+          <li>Islamabad, Pakistan</li>
+          <li><a href="https://www.facebook.com/share/1EW3QMmAwo/" target="_blank" rel="noopener">Facebook</a></li>
+          <li><a href="https://youtube.com/@temospringwater?si=gv7O9fIJRFlSdBqV" target="_blank" rel="noopener">YouTube</a></li>
+        </ul>
       </div>
     </div>
-  </div>
-</section>
-
-<section class="section section--white" id="b2b">
-  <div class="container">
-    <div class="section-head center">
-      <div class="eyebrow">B2B &amp; custom branding</div>
-      <h2>Bulk water supply for businesses</h2>
-      <p>TEMO supports offices, retailers, distributors, hotels, restaurants, institutions and events with dependable B2B bottled-water supply. Customized labels are available on request for eligible bulk orders.</p>
+    <div class="p-footer-bottom">
+      <span>© 2026 TEMO Spring Water. All rights reserved.</span>
+      <span>TEMO Spring Water (Pvt) Ltd — Islamabad, Pakistan</span>
     </div>
-    <div style="display:flex; gap:16px; justify-content:center; flex-wrap:wrap;">
-      <a href="business.html#quote-form" class="btn btn-primary">Request a B2B quote</a>
-      <a href="contact.html" class="btn btn-outline-deep">Ask about customized labels</a>
-    </div>
-  </div>
-</section>
-
-<section class="section section--ice">
-  <div class="container section-head center">
-    <h2>Ready to order?</h2>
-    <p style="color:#3C5A6B; margin-top:14px;">Contact us today for fresh, pure water delivered to your door.</p>
-    <div style="display:flex; gap:16px; justify-content:center; margin-top:28px; flex-wrap:wrap;">
-      <a href="products.html" class="btn btn-primary">Shop online</a>
-      <a href="contact.html" class="btn btn-outline-deep">Get in touch</a>
-    </div>
-  </div>
-</section>
-
-<!-- ============ FOOTER ============ -->
-<footer class="site-footer">
-  <div class="footer-wave"><svg viewBox="0 0 1440 90" preserveAspectRatio="none"><path d="M0,32L80,42.7C160,53,320,75,480,74.7C640,75,800,53,960,42.7C1120,32,1280,32,1360,32L1440,32L1440,0L0,0Z" fill="var(--deep)" opacity="0.1"/></svg></div>
-  <div class="container footer-grid">
-    <div class="footer-brand">
-      <div class="logo">
-        <img src="logo-icon-192.webp" alt="TEMO Spring Water" class="logo-mark" width="42" height="42">
-        <span class="logo-text"><span class="name">TEMO</span><span class="sub">SPRING WATER</span></span>
-      </div>
-      <p>Pure water. Pure life. Trusted bottled drinking water for homes, offices and businesses across Islamabad and Rawalpindi.</p>
-      <div class="footer-social">
-        <a href="https://www.facebook.com/share/1EW3QMmAwo/" target="_blank" rel="noopener" aria-label="Facebook"><svg><use href="#i-fb" xlink:href="#i-fb"/></svg></a>
-        <a href="#" aria-label="Instagram"><svg><use href="#i-ig" xlink:href="#i-ig"/></svg></a>
-        <a href="https://www.tiktok.com/@temo_spring_water?_r=1&_t=ZN-99mE1UOrcTW" target="_blank" rel="noopener" aria-label="TikTok"><svg><use href="#i-tiktok" xlink:href="#i-tiktok"/></svg></a>
-        <a href="https://youtube.com/@temospringwater?si=gv7O9fIJRFlSdBqV" target="_blank" rel="noopener" aria-label="YouTube"><svg><use href="#i-youtube" xlink:href="#i-youtube"/></svg></a>
-        <a href="https://wa.me/923106666369" target="_blank" rel="noopener" aria-label="WhatsApp"><svg><use href="#i-wa" xlink:href="#i-wa"/></svg></a>
-      </div>
-    </div>
-    <div class="footer-col">
-      <h4>Quick links</h4>
-      <ul>
-        <li><a href="/">Home</a></li>
-        <li><a href="products.html">Products</a></li>
-        <li><a href="about.html">About</a></li>
-        <li><a href="quality.html">Quality</a></li>
-        <li><a href="contact.html">Contact</a></li>
-      </ul>
-    </div>
-    <div class="footer-col">
-      <h4>Business</h4>
-      <ul>
-        <li><a href="business.html">Corporate supply</a></li>
-        <li><a href="dealer.html">Dealer program</a></li>
-        <li><a href="business.html#quote-form">Request a quote</a></li>
-      </ul>
-    </div>
-    <div class="footer-col">
-      <h4>Contact</h4>
-      <ul>
-        <li><a href="tel:03106666369">0310 6666369</a></li>
-        <li><a href="https://wa.me/923106666369" target="_blank" rel="noopener">WhatsApp order</a></li>
-        <li><a href="mailto:temospringwater@gmail.com">temospringwater@gmail.com</a></li>
-        <li>Islamabad, Pakistan</li>
-      </ul>
-    </div>
-  </div>
-  <div class="container footer-bottom">
-    <span>© 2026 TEMO Spring Water. All rights reserved.</span>
-    <span>TEMO Spring Water (Pvt) Ltd — Islamabad, Pakistan</span>
   </div>
 </footer>
 
-<a class="wa-float" data-wa-msg="Assalam-o-Alaikum, I want to place an order with TEMO Spring Water. Please share availability and delivery details." target="_blank" rel="noopener" aria-label="Order on WhatsApp">
+<a class="wa-float" href="https://wa.me/923106666369" data-wa-msg="Assalam-o-Alaikum, I want to place an order with TEMO Spring Water." target="_blank" rel="noopener" aria-label="Order on WhatsApp">
   <svg><use href="#i-wa" xlink:href="#i-wa"/></svg>
 </a>
+
 <div class="mobile-order-bar">
-  <a class="btn btn-primary btn-block" data-wa-msg="Assalam-o-Alaikum, I want to place an order with TEMO Spring Water. Please share availability and delivery details." target="_blank" rel="noopener">
-    <svg><use href="#i-wa" xlink:href="#i-wa"/></svg> Order on WhatsApp
-  </a>
+  <a class="p-btn p-btn--primary" href="https://wa.me/923106666369" data-wa-msg="Assalam-o-Alaikum, I want to place an order with TEMO Spring Water." target="_blank" rel="noopener">Order on WhatsApp</a>
 </div>
 
 <script src="main.js"></script>
