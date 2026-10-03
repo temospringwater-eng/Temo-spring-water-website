@@ -11,12 +11,12 @@ Do not merge to `main` or make the redesign live until final approval and go-liv
 2. Water Club business rules — COMPLETE
 3. Customer journey — COMPLETE
 4. Website backend API foundation — COMPLETE
-5. Real member account/auth — FOUNDATION READY / STEP 4B BLOCKED BY INCOMPLETE ERP REPO
+5. Real member account/auth — STEP 4B ADAPTER READY / DEPLOYMENT + OTP + TESTS PENDING
 6. Subscription & delivery engine — PENDING
 7. Rewards engine — PENDING
 8. Referral system — PENDING
 9. 19L bottle ledger — PENDING
-10. ERP integration — PENDING
+10. ERP integration — PARTIAL: EXISTING CUSTOMER PORTAL REUSED
 11. Admin Water Club dashboard — PENDING
 12. Driver integration — PENDING
 13. Payments / Raast P2M — PENDING
@@ -37,18 +37,33 @@ Do not merge to `main` or make the redesign live until final approval and go-liv
 - No missing local file references detected across the current HTML/CSS files.
 - No broken local fragment/anchor targets detected.
 - New Water Club page exists and is linked from the premium homepage.
-- Member dashboard prototype exists and is marked `noindex,nofollow`.
+- Water Club pages remain `noindex,nofollow` where account/private content is involved.
 - Water Club join form uses the existing TEMO form/WhatsApp flow.
 - Original TEMO logo assets are referenced on the new Water Club pages.
 - Redesign branch is ahead of `main` and `main` has not been merged/modified by this work.
 
 ### Issues / backlog
-1. Cloudflare Workers Build check is failing on the latest redesign commit. The latest checked `main` commit also shows the same failure, so this is not isolated to the Water Club code. Cloudflare build/deployment configuration must be investigated before go-live.
+1. Cloudflare Workers Build check was failing on the redesign and the checked `main` commit. Cloudflare build/deployment configuration must be investigated before go-live.
 2. `logo-icon-128.webp` is a zero-byte repository asset and is referenced by several legacy pages. Remove it from responsive image references or replace it with a valid asset before final release.
 3. Water Club navigation is not yet added to all legacy pages: About, Products, Business, Quality, Dealer and Contact.
 4. `sitemap.xml` does not yet include `water-club.html`. Add only when the page is approved for public indexing.
 5. Legacy pages contain likely unstyled utility classes: `check-list`, `contact-form`, `mobile-order-1`, and `three-col`. These predate the Water Club branch changes and should be visually verified/fixed during website completion.
-6. The member dashboard currently contains demo data only; no real authentication, customer data, rewards ledger, delivery engine or ERP connection exists yet.
+6. The member dashboard is no longer hard-coded demo customer data; it is now an auth-gated ERP adapter preview. It still requires deployed ERP/Worker configuration before it can return live customer data.
+
+## Step 4B — Current Integration
+
+The website Worker now reuses the existing ERP customer portal instead of creating a second account/customer database.
+
+Implemented adapter flow:
+- Water Club login → ERP `/api/customer/login`
+- Water Club logout → ERP `/api/logout`
+- Member identity/profile → ERP `/api/customer/me`
+- Member dashboard → ERP `/api/customer/dashboard`
+- Recurring deliveries → ERP `/api/customer/subscriptions`
+- Bottle balance → ERP `/api/customer/bottle-balance`
+- ERP session token is retained in an HttpOnly website cookie and is not returned to frontend JavaScript.
+
+Phone OTP remains fail-closed until an approved provider is configured. No fake OTP is accepted.
 
 ## Locked Pilot Reward Rules
 
@@ -68,4 +83,11 @@ Do not merge to `main` or make the redesign live until final approval and go-liv
 - B2B accounts may use separate contract-specific reward settings
 
 ## Immediate Next Phase
-Step 4B is temporarily BLOCKED: the connected `temospringwater-eng/Temo-ERP` main branch is missing runtime source directories referenced by `server.js` (`services/`, `public/`, and `tests/`). Sync the complete current ERP source to GitHub first, without secrets. Then re-audit and connect the website Cloudflare Worker API to the ERP customer/auth/session APIs. Do not deploy production /api/* routing or merge to main without final approval.
+Finish Step 4B validation before moving to the subscription/delivery engine:
+1. deploy or identify the trusted HTTPS ERP backend URL,
+2. configure Worker `ERP_API_BASE_URL`,
+3. route preview/test `/api/*` traffic to the Worker,
+4. test valid login, invalid login, logout, expired session, customer isolation and dashboard data,
+5. configure an approved OTP provider only when ready.
+
+Do not route production traffic, merge to `main`, or go live without explicit owner approval.
