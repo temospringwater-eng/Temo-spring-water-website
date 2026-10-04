@@ -58,3 +58,23 @@ After a reachable HTTPS ERP staging URL exists:
 A reachable HTTPS deployment of the existing TEMO ERP is required for real integration testing.
 
 No production routing, merge to `main`, duplicate backend, or go-live is authorized.
+
+
+## GitHub CI staging smoke — PASSED
+
+Run: 37201338361
+Commit: `9fce7cc8dc7d8f26a3e605139b34569bf8a4b02e`
+
+Passed:
+- checkout
+- Node.js 20 setup
+- clean `npm ci`
+- `server.js` syntax validation
+- service syntax validation
+- ERP process startup
+- clean SQLite staging database creation
+- `GET /api/health` success
+
+The staging integration branch now contains the Water Club-required ERP runtime and fail-closed placeholders for unrelated optional modules that are not required by Step 4B. Production `main` remains unchanged.
+
+The only remaining blocker for end-to-end Step 4B testing is an externally reachable HTTPS staging deployment.
