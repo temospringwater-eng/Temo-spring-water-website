@@ -205,7 +205,7 @@
         </div>
       </div>
       <div class="form-panel">
-        <form data-inquiry="Business quotation request" action="https://formsubmit.co/temospringwater@gmail.com" method="POST"><input type="hidden" name="_subject" value="TEMO Spring Water — Business quotation request"><input type="hidden" name="_template" value="table"><input type="hidden" name="source" value="Business quotation request"><input type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true" style="display:none">
+        <form data-lead-form data-inquiry="Business quotation request" action="https://formsubmit.co/temospringwater@gmail.com" method="POST"><input type="hidden" name="_subject" value="TEMO Spring Water — Business quotation request"><input type="hidden" name="_template" value="table"><input type="hidden" name="source" value="Business quotation request"><input type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true" style="display:none">
           <div class="form-grid">
             <div class="field"><label for="business-name">Name</label><input id="business-name" type="text" name="name" data-label="Name" required></div>
             <div class="field"><label for="business-company">Company name</label><input id="business-company" type="text" name="company" data-label="Company" required></div>
@@ -223,9 +223,9 @@
             <div class="field"><label for="business-custom_labels">Customized labels</label><select id="business-custom_labels" name="custom_labels" data-label="Customized labels"><option>No</option><option>Yes — please quote</option><option>Not sure — need details</option></select></div>
             <div class="field full"><label for="business-message">Message</label><textarea id="business-message" name="message" data-label="Message" placeholder="Tell us more about your requirement"></textarea></div>
           </div>
-          <button type="submit" class="btn btn-primary btn-block" style="margin-top:22px;">Send quotation request by email</button>
-          <p class="form-note">Your request is processed by FormSubmit and emailed to TEMO Spring Water. A verification step may appear. You can also prepare a WhatsApp message below.</p>
-        <button type="button" class="btn btn-outline-deep btn-block" data-prepare-whatsapp style="margin-top:12px;">Prepare WhatsApp message</button>
+          <button type="submit" data-lead-submit class="btn btn-primary btn-block" style="margin-top:22px;">Submit request</button>
+          <p class="form-note">Submit your details to TEMO, or choose email or WhatsApp below. The email option uses FormSubmit and may require verification.</p>
+        <p class="form-note" data-lead-status role="status" aria-live="polite"></p><button type="submit" data-email-fallback class="btn btn-outline-deep btn-block" style="margin-top:12px;">Send by email</button><button type="button" class="btn btn-outline-deep btn-block" data-prepare-whatsapp style="margin-top:12px;">Prepare WhatsApp message</button>
           <div class="form-success" role="status" aria-live="polite"><div><h4>WhatsApp message ready</h4><p>Your inquiry has not been sent. Open WhatsApp, review it, then tap Send.</p><a class="btn btn-primary" data-whatsapp-draft target="_blank" rel="noopener">Open WhatsApp</a></div></div></form>
 
       </div>

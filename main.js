@@ -1,6 +1,7 @@
 // TEMO SPRING WATER — shared site behaviour
 (function(){
   var WA_NUMBER = "923106666369";
+  var LEAD_WEBHOOK = "https://babar5635.app.n8n.cloud/webhook/temo-lead";
 
   function waLink(message){
     return "https://wa.me/" + WA_NUMBER + "?text=" + encodeURIComponent(message);
@@ -111,6 +112,46 @@
         panel.classList.remove("show");
         link.removeAttribute("href");
       });
+
+      // Preserve the existing B2B/dealer lead integration, but acknowledge
+      // success only after a successful response. Email remains a native fallback.
+      if(form.hasAttribute("data-lead-form")){
+        var status = form.querySelector("[data-lead-status]");
+        var submit = form.querySelector("[data-lead-submit]");
+        var pending = false;
+        form.addEventListener("submit", async function(e){
+          if(e.submitter && e.submitter.hasAttribute("data-email-fallback")) return;
+          e.preventDefault();
+          if(pending || !form.reportValidity()) return;
+          if(form.querySelector('[name="_honey"]').value) return;
+          pending = true;
+          submit.disabled = true;
+          status.textContent = "Sending your request…";
+          var controller = new AbortController();
+          var timeout = setTimeout(function(){ controller.abort(); }, 10000);
+          try{
+            var data = new FormData(form);
+            var details = [];
+            form.querySelectorAll("input, select, textarea").forEach(function(el){
+              if(!el.name || el.type === "hidden" || el.name[0] === "_") return;
+              if(el.value.trim()) details.push((el.getAttribute("data-label") || el.name.replace(/_/g, " ")) + ": " + el.value.trim());
+            });
+            var response = await fetch(LEAD_WEBHOOK, {
+              method:"POST", headers:{"Content-Type":"application/json"},
+              signal:controller.signal,
+              body:JSON.stringify({name:data.get("name") || "", email:data.get("email") || "", phone:data.get("phone") || "", city:data.get("city") || "", product:data.get("product") || form.getAttribute("data-inquiry"), message:details.join("\n"), source:form.getAttribute("data-inquiry"), page:window.location.href})
+            });
+            if(!response.ok) throw new Error("Request was not accepted");
+            status.textContent = "Your request was accepted. For urgent assistance, contact us on WhatsApp.";
+          }catch(err){
+            status.textContent = "We could not confirm receipt. Your details are still here. Please use Send by email or WhatsApp below.";
+          }finally{
+            clearTimeout(timeout);
+            pending = false;
+            submit.disabled = false;
+          }
+        });
+      }
     });
 
     // ---------- WhatsApp quick links with product-specific messages ----------
