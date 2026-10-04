@@ -141,7 +141,9 @@ h1,h2,h3,h4{ font-family:var(--font-display); font-optical-sizing:auto; font-wei
   display:flex; flex-direction:column; padding:26px var(--pad);
   transform:translateX(100%); transition:transform .35s ease;
 }
-.mobile-nav.open{ transform:translateX(0); }
+.mobile-nav{ visibility:hidden; overflow-y:auto; }
+.mobile-nav.open{ visibility:visible; transform:translateX(0); }
+.mobile-close{ width:44px; height:44px; flex-shrink:0; display:flex; align-items:center; justify-content:center; background:transparent; border:0; color:#fff; padding:0; font-size:36px; line-height:1; border-radius:8px; }
 .mobile-nav-top{ display:flex; justify-content:space-between; align-items:center; margin-bottom:40px; }
 .mobile-nav-top .logo-text .name{ color:#fff; }
 .mobile-nav a{ color:#EAF4F7; font-size:1.3rem; padding:16px 0; border-bottom:1px solid rgba(255,255,255,0.12); font-family:var(--font-display); }
@@ -506,4 +508,31 @@ h1,h2,h3,h4{ font-family:var(--font-display); font-optical-sizing:auto; font-wei
   .trust-band{ grid-template-columns:1fr; }
   .trust-item{ border-left:none !important; }
   .section{ padding:70px 0; }
+}
+
+/* Audit fixes shared by every page, including pages with legacy inline CSS. */
+[id^="product-"]{ scroll-margin-top:110px; }
+.product-price{ padding:16px 20px; background:var(--ice); border-left:3px solid var(--aqua); border-radius:8px; color:var(--deep-2); line-height:1.8; }
+.delivery-grid{ display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:20px; }
+.delivery-grid p{ color:#3C5A6B; }
+.form-grid > *{ min-width:0; }
+.field input,.field select,.field textarea{ width:100%; min-width:0; }
+.contact-form .field > span{ font-size:.86rem; font-weight:600; color:var(--deep-2); }
+.form-success{ color:var(--deep-2); }
+.section--deep .form-panel .form-note{ color:#4A6472; }
+.form-success .btn{ margin-top:14px; white-space:normal; }
+.form-panel > .btn,.form-panel form > .btn{ white-space:normal; text-align:center; justify-content:center; }
+@media(max-width:980px){
+  .delivery-grid{ grid-template-columns:1fr; }
+  .mobile-nav{ padding-bottom:30px; }
+  .mobile-nav-top{ margin-bottom:14px; }
+  .mobile-nav a{ padding:10px 0; }
+  .mobile-nav .btn{ margin-top:18px; flex-shrink:0; white-space:normal; }
+  .wa-float{ bottom:96px; }
+}
+@media(max-width:600px){
+  .form-panel{ padding:24px 18px; }
+  .form-success{ padding:18px; flex-wrap:wrap; }
+  .footer-grid,.footer-bottom{ padding-left:var(--pad); padding-right:var(--pad); }
+  .stat-row{ gap:24px; }
 }
