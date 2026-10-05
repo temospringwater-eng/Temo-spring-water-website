@@ -40,7 +40,7 @@ function cookies(request) {
       .filter(Boolean)
       .map((item) => {
         const index = item.indexOf("=");
-        return index < 0 ? [item, ""] : [item.slice(0, index), decodeURIComponent(item.slice(index + 1))];
+        return index < 0 ? [item, ""] : [item.slice(0, index), item.slice(index + 1)];
       })
   );
 }
@@ -124,7 +124,9 @@ function authRequired(id, headers) {
 async function readJson(request, maxBytes = 8192) {
   const length = Number(request.headers.get("content-length") || 0);
   if (length > maxBytes) throw new Error("PAYLOAD_TOO_LARGE");
-  return request.json();
+  const text = await request.text();
+  if (new TextEncoder().encode(text).byteLength > maxBytes) throw new Error("PAYLOAD_TOO_LARGE");
+  return JSON.parse(text);
 }
 
 async function authenticatedProxy(request, env, erpPath, id, headers, method = "GET") {
@@ -139,7 +141,7 @@ async function authenticatedProxy(request, env, erpPath, id, headers, method = "
 
   const result = await erpRequest(env, erpPath, { method, token, body });
   if (!result.configured) return integrationPending(id, headers);
-  if (result.status === 401 || result.status === 403) {
+  if (result.status === 401) {
     return json({ ok: false, code: "AUTH_REQUIRED", message: "Your member session is no longer valid.", request_id: id }, 401, {
       ...headers,
       "set-cookie": clearSessionCookie((env.APP_ENV || "") !== "local")
@@ -168,6 +170,13 @@ export default {
       return new Response(null, { status: 204, headers });
     }
 
+    if (["POST","PATCH","DELETE"].includes(request.method)) {
+      const origin = request.headers.get("origin");
+      const allowed = env.ALLOWED_ORIGIN || "https://www.temospringwater.com";
+      if (origin && origin !== allowed) return json({ ok:false,code:"ORIGIN_NOT_ALLOWED",message:"Request origin is not allowed.",request_id:id },403,headers);
+      if (path !== "/api/water-club/auth/logout" && !String(request.headers.get("content-type") || "").toLowerCase().startsWith("application/json")) return json({ ok:false,message:"JSON request required.",request_id:id },415,headers);
+    }
+
     if (path === "/api/health" && request.method === "GET") {
       return json({ ok: true, service: "temo-water-club-api", environment: env.APP_ENV || "unknown", erp_configured: Boolean(erpBase(env)), request_id: id }, 200, headers);
     }
@@ -193,7 +202,7 @@ export default {
       });
       if (!result.configured) return integrationPending(id, headers);
       if (!result.ok || !result.body?.success || !result.body?.token) {
-        const status = result.status === 429 ? 429 : 401;
+        const status = result.status >= 500 ? 502 : result.status === 429 ? 429 : 401;
         return json({ ok: false, code: "LOGIN_FAILED", message: "Invalid customer credentials or account unavailable.", request_id: id }, status, headers);
       }
 
@@ -248,15 +257,23 @@ export default {
     if (path === "/api/water-club/bottles" && request.method === "GET")
       return authenticatedProxy(request, env, "/api/customer/bottle-balance", id, headers);
 
-    const pending = new Set([
-      "POST /api/water-club/membership",
-      "GET /api/water-club/rewards",
-      "GET /api/water-club/deliveries",
-      "GET /api/water-club/referrals"
-    ]);
-    if (pending.has(`${request.method} ${path}`)) {
-      return json({ ok: false, code: "PHASE_NOT_IMPLEMENTED", message: "This Water Club feature belongs to a later implementation phase.", request_id: id }, 503, headers);
-    }
+    if (path === "/api/water-club/support" && ["GET","POST"].includes(request.method)) return authenticatedProxy(request,env,"/api/customer/complaints",id,headers,request.method);
+
+    const clubRoutes = {
+      "POST /api/water-club/membership":"membership",
+      "GET /api/water-club/catalog":"catalog",
+      "POST /api/water-club/orders":"orders",
+      "GET /api/water-club/rewards":"rewards",
+      "POST /api/water-club/rewards/redeem":"rewards/redeem",
+      "GET /api/water-club/deliveries":"deliveries",
+      "GET /api/water-club/referrals":"referrals",
+      "POST /api/water-club/referrals":"referrals",
+      "POST /api/water-club/subscriptions":"subscriptions"
+    };
+    const route = clubRoutes[`${request.method} ${path}`];
+    if (route) return authenticatedProxy(request,env,`/api/customer/water-club/${route}`,id,headers,request.method);
+    const scheduleAction = path.match(/^\/api\/water-club\/subscriptions\/(\d+)\/(pause|resume|skip|cancel)$/);
+    if (scheduleAction && request.method === "POST") return authenticatedProxy(request,env,`/api/customer/water-club/subscriptions/${scheduleAction[1]}/${scheduleAction[2]}`,id,headers,"POST");
 
     return json({ ok: false, code: "NOT_FOUND", message: "API route not found.", request_id: id }, 404, headers);
   }

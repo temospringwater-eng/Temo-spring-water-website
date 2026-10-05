@@ -52,3 +52,17 @@ Set `ERP_API_BASE_URL` in the Worker environment to the trusted deployed TEMO ER
 - Customer identity comes from the authenticated ERP session; browser-supplied customer IDs are not trusted.
 - OTP is fail-closed until a provider is explicitly configured.
 - Production routing remains disabled until testing and final owner approval.
+
+## Water Club member engine
+
+The following routes now proxy to company/customer-scoped ERP Water Club endpoints:
+
+- POST membership (home/family/office/business)
+- GET catalog; POST orders
+- GET rewards; POST rewards/redeem
+- GET/POST referrals
+- POST subscriptions; POST subscriptions/:id/pause|resume|skip|cancel
+- GET deliveries
+- GET/POST support (existing ERP complaints)
+
+Order, subscription, subscription actions and redemption mutations require a unique requestKey. Identical retries return the prior result; changed bodies under the same key return conflict. Prices and customer identity are determined by ERP, never by browser IDs/prices. Membership uses an existing ERP customer session. OTP signup remains disabled until its approved provider is connected. Production ERP URL must use HTTPS.

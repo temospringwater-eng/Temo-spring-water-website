@@ -1,0 +1,19 @@
+name: Water Club checks
+on:
+  push:
+    branches: [design/premium-homepage-v1]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - run: npm test
+        working-directory: backend
+      - run: node --check water-club-member.js
+      - run: node --check backend/src/index.js

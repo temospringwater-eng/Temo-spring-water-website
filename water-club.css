@@ -182,3 +182,10 @@ body.water-club-page{margin:0;background:#fff;color:var(--wc-ink);font-family:'I
 .wc-auth-status.show{display:block}
 .wc-auth-links{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-top:20px;font-size:.84rem}
 .wc-auth-links a{color:var(--wc-blue);font-weight:800}
+
+/* Member controls share the existing Water Club visual style. */
+.wc-auth-form label{display:grid;gap:6px;font-weight:600;font-size:.88rem}
+.wc-auth-form select,.wc-auth-form input,.wc-auth-form textarea{width:100%;min-height:44px;padding:10px;border:1px solid #c7dbe6;border-radius:8px;background:white;color:#153c54;box-sizing:border-box}
+.wc-auth-form textarea{min-height:100px}.wc-auth-form{margin:16px 0}.wc-btn:disabled{opacity:.55;cursor:wait}
+.wc-schedule-row{border-top:1px solid #d8e5ed;padding:12px 0}.wc-schedule-row button{margin:4px;padding:8px;border:1px solid #b4d0df;border-radius:8px;background:#eff7fb;cursor:pointer}
+#wc-message{min-height:24px;color:#145b87}#wc-message[data-error=true]{color:#a31b25}.wc-dash-main,.wc-dash-side{min-width:0}.wc-card{overflow-wrap:anywhere}

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TEMO Water Club Member Dashboard — Preview</title>
+<title>TEMO Water Club Member Dashboard</title>
 <meta name="robots" content="noindex,nofollow">
 <link rel="icon" type="image/x-icon" href="favicon.ico">
 <link rel="preload" href="inter-normal-400.woff" as="font" type="font/woff" crossorigin>
@@ -55,6 +55,7 @@
       <div class="wc-demo-badge" id="wc-api-state">Checking secure member session…</div>
     </div>
 
+    <p id="wc-message" role="status" aria-live="polite"></p>
     <div class="wc-dash-grid">
       <div class="wc-dash-main">
         <section class="wc-card">
@@ -63,7 +64,7 @@
           <div class="wc-stats">
             <div class="wc-stat"><strong id="wc-orders">—</strong><span>Recent orders</span></div>
             <div class="wc-stat"><strong id="wc-subscriptions">—</strong><span>Delivery plans</span></div>
-            <div class="wc-stat"><strong id="wc-bottles">—</strong><span>19L bottle balance</span></div>
+            <div class="wc-stat"><strong id="wc-bottles">—</strong><span>Bottle balance</span></div>
             <div class="wc-stat"><strong id="wc-outstanding">—</strong><span>Outstanding account</span></div>
           </div>
         </section>
@@ -78,11 +79,32 @@
             </div>
             <div class="wc-pill" id="wc-plan-status">Pending</div>
           </div>
-          <p class="wc-note">This data comes from the existing ERP recurring-delivery/customer system. Water Club does not create a second customer record.</p>
+          <div id="wc-schedules"></div>
+          <form id="wc-join-form" class="wc-auth-form">
+            <label>Membership plan<select name="plan"><option value="home">Home</option><option value="family">Family</option><option value="office">Office</option><option value="business">Business (rewards require approval)</option></select></label>
+            <button class="wc-btn wc-btn-primary">Join Water Club</button>
+          </form>
+          <form id="wc-schedule-form" class="wc-auth-form">
+            <h3>Set a delivery schedule</h3>
+            <label>Product<select name="productId" data-catalog required></select></label>
+            <label>Quantity<input name="quantity" type="number" min="1" max="10000" value="1" required></label>
+            <label>Frequency<select name="frequency"><option value="weekly">Weekly</option><option value="alternate_days">Every other day</option><option value="daily">Daily</option><option value="monthly">Monthly</option><option value="custom">Custom interval</option></select></label>
+            <label>Custom interval<input name="customInterval" type="number" min="1" max="365" value="2"></label>
+            <label>Custom unit<select name="customUnit"><option value="weeks">Weeks</option><option value="days">Days</option><option value="months">Months</option></select></label>
+            <label>Start date<input name="startDate" type="date" required></label>
+            <label>End date (optional)<input name="endDate" type="date"></label>
+            <button class="wc-btn wc-btn-primary">Save schedule</button>
+          </form>
         </section>
 
         <section class="wc-card">
-          <h2>Recent orders</h2>
+          <h2>Order water</h2>
+          <form id="wc-order-form" class="wc-auth-form">
+            <label>Product<select name="productId" data-catalog required></select></label>
+            <label>Quantity<input name="quantity" type="number" min="1" max="10000" value="1" required></label>
+            <button class="wc-btn wc-btn-primary">Place order</button>
+          </form>
+          <h3>Recent orders</h3>
           <div class="wc-table-wrap">
             <table class="wc-table">
               <thead><tr><th>Date</th><th>Order</th><th>Status</th><th>Amount</th></tr></thead>
@@ -95,16 +117,32 @@
       <aside class="wc-dash-side">
         <section class="wc-card">
           <h3>Rewards</h3>
-          <p style="color:var(--wc-muted);font-size:.86rem;line-height:1.6;">Customer-scoped Water Club rewards will be connected in the rewards phase. No demo points are shown as real data.</p>
+          <strong id="wc-points" style="font-size:2rem">—</strong><p>Available points</p>
+          <p id="wc-reward-rule">100 points = one free 19L refill</p><p id="wc-points-debt"></p>
+          <button id="wc-redeem" class="wc-btn wc-btn-primary" type="button" disabled>Redeem free refill</button>
+          <p class="wc-note">Verified paid deliveries earn points. Unused points expire after 12 months. Bottle deposits and delivery charges do not earn points.</p>
+          <div id="wc-reward-history"></div>
         </section>
 
         <section class="wc-card">
-          <h3>19L bottle ledger</h3>
+          <h3>Bottle ledger</h3>
           <div class="wc-bottle-ledger">
             <div class="wc-ledger-item"><strong id="wc-bottle-ledger">—</strong><span>Current ERP balance</span></div>
           </div>
         </section>
 
+        <section class="wc-card">
+          <h3>Invite a customer</h3><p id="wc-referral-code">—</p>
+          <button id="wc-copy-referral" type="button" class="wc-btn">Copy code</button>
+          <p>20 points after their first verified paid delivery.</p><div id="wc-referral-history"></div>
+          <form id="wc-referral-form" class="wc-auth-form"><label>Who referred you?<input name="code" maxlength="80" required></label><button class="wc-btn wc-btn-primary">Link referral</button></form>
+        </section>
+        <section class="wc-card"><h3>Deliveries</h3><div id="wc-deliveries"></div></section>
+        <section class="wc-card">
+          <h3>Account &amp; support</h3>
+          <form id="wc-profile-form" class="wc-auth-form"><label>Name<input name="name" required maxlength="160"></label><label>Phone<input name="phone" maxlength="40"></label><label>Address<input name="address" maxlength="500"></label><button class="wc-btn wc-btn-primary">Save details</button></form>
+          <form id="wc-support-form" class="wc-auth-form"><label>Support subject<input name="title" required maxlength="160"></label><label>Message<textarea name="description" required maxlength="2000"></textarea></label><button class="wc-btn wc-btn-primary">Send support request</button></form>
+        </section>
         <section class="wc-card">
           <h3>Quick actions</h3>
           <div class="wc-dashboard-actions">
@@ -123,93 +161,13 @@
   <div class="p-container">
     <div class="p-footer-bottom" style="margin-top:0;">
       <span>© 2026 TEMO Spring Water</span>
-      <span>Water Club Member Dashboard — Preview branch</span>
+      <span>Water Club Member Dashboard</span>
     </div>
   </div>
 </footer>
 
 <script src="main.js"></script>
 <script src="premium-home.js"></script>
-<script>
-(function(){
-  var state=document.getElementById("wc-api-state");
-  var money=function(value){return Number(value||0).toLocaleString("en-PK",{maximumFractionDigits:2})+" PKR";};
-  var text=function(id,value){var el=document.getElementById(id);if(el)el.textContent=value;};
-
-  async function loadDashboard(){
-    try{
-      var response=await fetch("/api/water-club/dashboard",{credentials:"same-origin",headers:{"accept":"application/json"}});
-      var payload={};
-      try{payload=await response.json();}catch(_){}
-      if(response.status===401){
-        window.location.replace("water-club-login.html");
-        return;
-      }
-      if(!response.ok||!payload.ok){
-        if(state)state.textContent=payload.message||"ERP connection is not configured on this preview yet.";
-        return;
-      }
-
-      var data=payload.data||{};
-      var customer=data.customer||{};
-      var orders=Array.isArray(data.orders)?data.orders:[];
-      var subscriptions=Array.isArray(data.subscriptions)?data.subscriptions:[];
-      var active=subscriptions.find(function(row){return row.status==="active";})||subscriptions[0]||null;
-
-      if(state)state.textContent="Secure ERP customer session active";
-      text("wc-welcome","Welcome, "+(customer.name||"TEMO Member"));
-      text("wc-account-meta",(customer.email||customer.phone||"Verified ERP customer account"));
-      text("wc-orders",String(orders.length));
-      text("wc-subscriptions",String(subscriptions.length));
-      text("wc-bottles",String(Number(data.bottleBalance||0)));
-      text("wc-bottle-ledger",String(Number(data.bottleBalance||0)));
-      text("wc-outstanding",money(data.account?.outstanding||0));
-      text("wc-address",customer.address||"Delivery address not set");
-
-      if(active){
-        text("wc-next-product",(active.quantity||"")+" × "+(active.product_name||"Water delivery"));
-        text("wc-next-schedule",(active.frequency||"Schedule")+" • Next due "+(active.next_due_date||"TBD"));
-        text("wc-plan-status",active.status||"active");
-      }else{
-        text("wc-next-product","No recurring delivery plan");
-        text("wc-next-schedule","Join or configure a Water Club delivery schedule");
-        text("wc-plan-status","Not active");
-      }
-
-      var tbody=document.getElementById("wc-orders-body");
-      if(tbody){
-        tbody.textContent="";
-        if(!orders.length){
-          var tr=document.createElement("tr"),td=document.createElement("td");
-          td.colSpan=4;td.textContent="No recent orders found.";tr.appendChild(td);tbody.appendChild(tr);
-        }else{
-          orders.slice(0,10).forEach(function(order){
-            var tr=document.createElement("tr");
-            [
-              String(order.created_at||"").slice(0,10)||"—",
-              "#"+String(order.id||"—"),
-              order.status||"—",
-              money(order.total_amount||0)
-            ].forEach(function(value){var td=document.createElement("td");td.textContent=value;tr.appendChild(td);});
-            tbody.appendChild(tr);
-          });
-        }
-      }
-    }catch(_){
-      if(state)state.textContent="Water Club API preview is not reachable yet.";
-    }
-  }
-
-  var logout=document.getElementById("wc-logout");
-  if(logout){
-    logout.addEventListener("click",async function(){
-      logout.disabled=true;
-      try{await fetch("/api/water-club/auth/logout",{method:"POST",credentials:"same-origin"});}catch(_){}
-      window.location.replace("water-club-login.html");
-    });
-  }
-  loadDashboard();
-})();
-</script>
+<script src="water-club-member.js"></script>
 </body>
 </html>
