@@ -45,15 +45,37 @@
     var toggle = document.querySelector(".nav-toggle");
     var closeBtn = document.querySelector(".mobile-close");
     var mobileNav = document.querySelector(".mobile-nav");
-    if(toggle && mobileNav){
-      toggle.addEventListener("click", function(){ mobileNav.classList.add("open"); document.body.style.overflow="hidden"; });
+    if(toggle && closeBtn && mobileNav){
+      var previousOverflow = "";
+      function setMenu(open){
+        if(open) previousOverflow = document.body.style.overflow;
+        mobileNav.classList.toggle("open", open);
+        mobileNav.inert = !open;
+        mobileNav.setAttribute("aria-hidden", String(!open));
+        toggle.setAttribute("aria-expanded", String(open));
+        document.body.style.overflow = open ? "hidden" : previousOverflow;
+        if(open) closeBtn.focus();
+        else if(mobileNav.contains(document.activeElement)) toggle.focus();
+      }
+      toggle.addEventListener("click", function(){ setMenu(true); });
+      closeBtn.addEventListener("click", function(){ setMenu(false); });
+      mobileNav.querySelectorAll("a").forEach(function(a){
+        a.addEventListener("click", function(){ setMenu(false); });
+      });
+      document.addEventListener("keydown", function(e){
+        if(!mobileNav.classList.contains("open")) return;
+        if(e.key === "Escape") { e.preventDefault(); setMenu(false); }
+        if(e.key === "Tab"){
+          var items = mobileNav.querySelectorAll('a[href], button');
+          var first = items[0], last = items[items.length - 1];
+          if(e.shiftKey && document.activeElement === first){ e.preventDefault(); last.focus(); }
+          else if(!e.shiftKey && document.activeElement === last){ e.preventDefault(); first.focus(); }
+        }
+      });
+      window.addEventListener("resize", function(){
+        if(window.innerWidth > 980 && mobileNav.classList.contains("open")) setMenu(false);
+      });
     }
-    if(closeBtn && mobileNav){
-      closeBtn.addEventListener("click", function(){ mobileNav.classList.remove("open"); document.body.style.overflow=""; });
-    }
-    mobileNav && mobileNav.querySelectorAll("a").forEach(function(a){
-      a.addEventListener("click", function(){ mobileNav.classList.remove("open"); document.body.style.overflow=""; });
-    });
 
     // ---------- Random gentle bubble placement in hero ----------
     document.querySelectorAll(".bubble").forEach(function(b, i){
@@ -66,52 +88,70 @@
       b.style.animationDuration = (10+Math.random()*8)+"s";
     });
 
-    // ---------- Generic form handler ----------
-    document.querySelectorAll("form[data-wa-form]").forEach(function(form){
-      form.addEventListener("submit", function(e){
-        e.preventDefault();
-        var data = new FormData(form);
-        var fields = {};
-        var lines = [];
-        var label = form.getAttribute("data-wa-form");
-        lines.push(label + " — new inquiry");
-        form.querySelectorAll("[name]").forEach(function(el){
-          var val = data.get(el.name);
-          fields[el.name] = val || "";
-          if(val){
-            var fieldLabel = el.getAttribute("data-label") || el.name;
-            lines.push(fieldLabel + ": " + val);
+    // Email uses the native FormSubmit POST. Never claim delivery or clear
+    // customer details before a provider response. WhatsApp is an explicit draft.
+    document.querySelectorAll("form[data-inquiry]").forEach(function(form){
+      var prepare = form.querySelector("[data-prepare-whatsapp]");
+      var panel = form.querySelector(".form-success");
+      var link = form.querySelector("[data-whatsapp-draft]");
+      if(!prepare || !panel || !link) return;
+      prepare.addEventListener("click", function(){
+        if(!form.reportValidity()) return;
+        var lines = [form.getAttribute("data-inquiry") + " — new inquiry"];
+        form.querySelectorAll("input, select, textarea").forEach(function(el){
+          if(!el.name || el.type === "hidden" || el.name[0] === "_" || el.disabled) return;
+          var value = el.value.trim();
+          if(value) lines.push((el.getAttribute("data-label") || el.name.replace(/_/g, " ")) + ": " + value);
+        });
+        link.href = waLink(lines.join("\n"));
+        panel.classList.add("show");
+        link.focus();
+      });
+      // Do not let a previously prepared message silently contain stale values.
+      form.addEventListener("input", function(){
+        panel.classList.remove("show");
+        link.removeAttribute("href");
+      });
+
+      // Preserve the existing B2B/dealer lead integration, but acknowledge
+      // success only after a successful response. Email remains a native fallback.
+      if(form.hasAttribute("data-lead-form")){
+        var status = form.querySelector("[data-lead-status]");
+        var submit = form.querySelector("[data-lead-submit]");
+        var pending = false;
+        form.addEventListener("submit", async function(e){
+          if(e.submitter && e.submitter.hasAttribute("data-email-fallback")) return;
+          e.preventDefault();
+          if(pending || !form.reportValidity()) return;
+          if(form.querySelector('[name="_honey"]').value) return;
+          pending = true;
+          submit.disabled = true;
+          status.textContent = "Sending your request…";
+          var controller = new AbortController();
+          var timeout = setTimeout(function(){ controller.abort(); }, 10000);
+          try{
+            var data = new FormData(form);
+            var details = [];
+            form.querySelectorAll("input, select, textarea").forEach(function(el){
+              if(!el.name || el.type === "hidden" || el.name[0] === "_") return;
+              if(el.value.trim()) details.push((el.getAttribute("data-label") || el.name.replace(/_/g, " ")) + ": " + el.value.trim());
+            });
+            var response = await fetch(LEAD_WEBHOOK, {
+              method:"POST", headers:{"Content-Type":"application/json"},
+              signal:controller.signal,
+              body:JSON.stringify({name:data.get("name") || "", email:data.get("email") || "", phone:data.get("phone") || "", city:data.get("city") || "", product:data.get("product") || form.getAttribute("data-inquiry"), message:details.join("\n"), source:form.getAttribute("data-inquiry"), page:window.location.href})
+            });
+            if(!response.ok) throw new Error("Request was not accepted");
+            status.textContent = "Your request was accepted. For urgent assistance, contact us on WhatsApp.";
+          }catch(err){
+            status.textContent = "We could not confirm receipt. Your details are still here. Please use Send by email or WhatsApp below.";
+          }finally{
+            clearTimeout(timeout);
+            pending = false;
+            submit.disabled = false;
           }
         });
-        var message = lines.join("\n");
-
-        // Send the real submitted details to the TEMO lead inbox (best-effort;
-        // never blocks the WhatsApp flow below if this fails or is blocked).
-        try{
-          fetch(LEAD_WEBHOOK, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              name: fields.name || "",
-              email: fields.email || "",
-              phone: fields.phone || "",
-              city: fields.city || "",
-              product: fields.product || label,
-              message: message,
-              source: label,
-              page: window.location.href
-            })
-          }).catch(function(){ /* ignore network/CORS errors, WhatsApp path still works */ });
-        }catch(err){ /* fetch unsupported or blocked — no-op */ }
-
-        var successBox = form.parentElement.querySelector(".form-success");
-        if(successBox){ successBox.classList.add("show"); successBox.scrollIntoView({behavior:"smooth", block:"nearest"}); }
-
-        var waBtn = form.parentElement.querySelector(".form-success a.btn");
-        if(waBtn){ waBtn.href = waLink(message); }
-
-        form.reset();
-      });
+      }
     });
 
     // ---------- WhatsApp quick links with product-specific messages ----------
@@ -120,12 +160,15 @@
     });
 
     // ---------- Active nav link ----------
-    var path = window.location.pathname.split("/").pop() || "index.html";
+    function pageName(url){
+      return url.split("#")[0].split("?")[0].replace(/\/$/, "").split("/").pop().replace(/\.html$/, "") || "index";
+    }
+    var path = pageName(window.location.pathname);
     document.querySelectorAll(".main-nav a, .mobile-nav a").forEach(function(a){
-      var href = a.getAttribute("href");
-      if(href === path || (path === "index.html" && href === "/")){
-        a.classList.add("active");
-      }
+      var active = pageName(a.getAttribute("href") || "") === path;
+      a.classList.toggle("active", active);
+      if(active) a.setAttribute("aria-current", "page");
+      else a.removeAttribute("aria-current");
     });
   });
 })();
