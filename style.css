@@ -536,3 +536,8 @@ h1,h2,h3,h4{ font-family:var(--font-display); font-optical-sizing:auto; font-wei
   .footer-grid,.footer-bottom{ padding-left:var(--pad); padding-right:var(--pad); }
   .stat-row{ gap:24px; }
 }
+
+/* Lighthouse accessibility: stronger text contrast on light surfaces. */
+.section:not(.section--deep) .eyebrow{color:#086075}
+.section:not(.section--deep) .card a[style*="aqua-deep"]{color:#086075!important}
+.site-footer .logo-text .sub{color:#8FE4F0}
