@@ -1,0 +1,38 @@
+name: Water Effects Browser QA
+on:
+  pull_request:
+    paths:
+      - 'index.html'
+      - 'about.html'
+      - 'products.html'
+      - 'contact.html'
+      - 'water-effects.css'
+      - 'water-effects.js'
+      - 'tests/water-browser-smoke.cjs'
+      - '.github/workflows/water-browser-qa.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  browser-smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install isolated test browser
+        run: |
+          npm install --no-save --no-package-lock playwright
+          npx playwright install --with-deps chromium
+      - name: Run responsive browser smoke tests
+        run: node tests/water-browser-smoke.cjs
+      - name: Upload preview screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: temo-water-browser-screenshots
+          path: water-qa-screenshots/
+          if-no-files-found: ignore
+          retention-days: 7
