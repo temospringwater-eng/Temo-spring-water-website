@@ -42,7 +42,7 @@ const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
     intercepted=true;
     const request=route.request();
     assert.equal(request.method(),'POST');
-    assert.match(request.postData()||'',/TEMO QA Test/);
+    assert.equal(new URLSearchParams(request.postData()||'').get('name'),'TEMO QA Test');
     await route.abort('blockedbyclient');
   });
   await submit.click();
