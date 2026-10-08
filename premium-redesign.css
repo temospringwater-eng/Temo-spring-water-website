@@ -53,3 +53,13 @@ body.temo-premium{background:#f5fbfc}
 .temo-premium .section--deep{background:radial-gradient(ellipse at 15% 20%,rgba(25,153,179,.3),transparent 58%),linear-gradient(130deg,#051c33,#07475c)}
 .temo-premium .section--deep .section-head .eyebrow{color:#b8fcf5}
 @media(max-width:650px){.temo-premium .page-hero{min-height:270px;padding:65px 0 75px}.temo-premium .page-hero h1{font-size:clamp(2.3rem,9vw,3.35rem)}.temo-premium .two-col{gap:28px}}
+
+/* Phase 3: premium contact / business / dealer forms and CTAs. */
+.temo-premium .contact-form,.temo-premium .form-panel,.temo-premium form[data-inquiry]{border-radius:24px}
+.temo-premium .form-panel{background:linear-gradient(155deg,#fff,#f1fafc);border:1px solid #d7e8ee;box-shadow:0 24px 60px rgba(7,53,76,.08)}
+.temo-premium .field input,.temo-premium .field select,.temo-premium .field textarea,.temo-premium .contact-form input,.temo-premium .contact-form select,.temo-premium .contact-form textarea{border-radius:12px;border-color:#cbdfe7;background:#fff;transition:border-color .2s,box-shadow .2s}
+.temo-premium .field input:focus-visible,.temo-premium .field select:focus-visible,.temo-premium .field textarea:focus-visible,.temo-premium .contact-form input:focus-visible,.temo-premium .contact-form textarea:focus-visible{outline:2px solid #087a91;outline-offset:2px}
+.temo-premium .btn-primary{border-radius:100px}
+.temo-premium .btn-outline-deep{border-radius:100px}
+.temo-premium .section--ice .card{background:linear-gradient(155deg,#fff,#f2fafb)}
+@media(prefers-reduced-motion:reduce){.temo-premium .field input,.temo-premium .field select,.temo-premium .field textarea{transition:none}}
