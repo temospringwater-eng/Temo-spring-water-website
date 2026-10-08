@@ -10,3 +10,9 @@
 @media(max-width:767px){.temo-water-layer{opacity:.48}.temo-water-drop:nth-child(n+6){display:none}.temo-water-layer::before{background:radial-gradient(ellipse at 80% 15%,rgba(23,169,190,.15),transparent 55%)}.temo-water-layer::after{opacity:.5}}
 @media(prefers-reduced-motion:reduce){.temo-water-layer,.temo-water-layer::before,.temo-water-layer::after,.temo-water-layer .temo-water-drop{animation:none!important}.temo-water-layer .temo-water-drop{display:none}.temo-water-layer{opacity:.25}}
 @media print{.temo-water-layer{display:none!important}}
+
+/* Secondary-page heroes: keep decorative water below real content. */
+.page-hero>.temo-water-layer{z-index:0}
+.page-hero>.container{position:relative;z-index:1}
+.page-hero>.temo-water-layer{opacity:.52}
+@media(max-width:767px){.page-hero>.temo-water-layer{opacity:.30}}
