@@ -1,0 +1,12 @@
+/* TEMO decorative water engine — isolated, paint-only animation. */
+.temo-water-layer{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:0;isolation:isolate;opacity:.85}
+.temo-water-layer::before{content:"";position:absolute;inset:-20% -10%;background:repeating-linear-gradient(102deg,transparent 0 9%,rgba(127,220,230,.045) 9.5%,transparent 11% 20%),radial-gradient(ellipse at 80% 15%,rgba(23,169,190,.22),transparent 55%);transform:translate3d(0,0,0);animation:temo-water-flow 19s ease-in-out infinite alternate}
+.temo-water-layer::after{content:"";position:absolute;left:-10%;right:-10%;bottom:-28%;height:55%;background:radial-gradient(ellipse at 50% 0%,rgba(127,220,230,.22),transparent 65%);transform:translate3d(0,0,0);animation:temo-water-tide 17s ease-in-out infinite alternate}
+.temo-water-drop{position:absolute;top:-18%;left:var(--x);width:var(--size);height:calc(var(--size)*1.55);border-radius:52% 48% 55% 45%;background:radial-gradient(ellipse at 30% 20%,rgba(255,255,255,.48),transparent 32%),linear-gradient(135deg,rgba(127,220,230,.17),rgba(255,255,255,.04));border:1px solid rgba(220,250,255,.22);box-shadow:inset 1px 1px 3px rgba(255,255,255,.16),0 2px 9px rgba(0,0,0,.08);opacity:var(--alpha,.32);transform:translate3d(0,-10vh,0);animation:temo-water-fall var(--time,13s) linear var(--delay,0s) infinite}
+@keyframes temo-water-flow{to{transform:translate3d(3%,7%,0)}}
+@keyframes temo-water-tide{to{transform:translate3d(4%,-9%,0)}}
+@keyframes temo-water-fall{to{transform:translate3d(9px,120vh,0)}}
+.temo-water-layer.is-paused,.temo-water-layer.is-paused::before,.temo-water-layer.is-paused::after,.temo-water-layer.is-paused .temo-water-drop{animation-play-state:paused}
+@media(max-width:767px){.temo-water-layer{opacity:.48}.temo-water-drop:nth-child(n+6){display:none}.temo-water-layer::before{background:radial-gradient(ellipse at 80% 15%,rgba(23,169,190,.15),transparent 55%)}.temo-water-layer::after{opacity:.5}}
+@media(prefers-reduced-motion:reduce){.temo-water-layer,.temo-water-layer::before,.temo-water-layer::after,.temo-water-layer .temo-water-drop{animation:none!important}.temo-water-layer .temo-water-drop{display:none}.temo-water-layer{opacity:.25}}
+@media print{.temo-water-layer{display:none!important}}
