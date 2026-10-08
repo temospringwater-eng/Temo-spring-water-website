@@ -70,6 +70,7 @@
 :root{ --deep: #0A3A5C; --deep-2: #062744; --ink: #0B2536; --aqua: #17A9BE; --aqua-deep: #0E8699; --aqua-light: #7FDCE6; --ice: #F4FAFB; --foam: #E1F2F4; --foam-2: #CDE9EC; --white: #FFFFFF; --line: rgba(10,58,92,0.12); --line-light: rgba(255,255,255,0.22); --shadow-soft: 0 20px 50px -25px rgba(6,39,68,0.35); --font-display: 'Fraunces', serif; --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; --max: 1180px; --pad: clamp(20px, 5vw, 64px); --radius-lg: 22px; --radius-md: 14px; --radius-sm: 8px; --wa-number: 923106666369; }
 </style>
 <link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="water-effects.css">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -208,6 +209,18 @@
 
 <section class="hero">
   <div class="hero-bg">
+<div class="temo-water-layer" data-temo-water aria-hidden="true">
+<span class="temo-water-drop" style="--x:7%;--size:7px;--time:14s;--delay:-4s;--alpha:.28"></span>
+<span class="temo-water-drop" style="--x:17%;--size:12px;--time:18s;--delay:-11s;--alpha:.26"></span>
+<span class="temo-water-drop" style="--x:29%;--size:5px;--time:12s;--delay:-2s;--alpha:.38"></span>
+<span class="temo-water-drop" style="--x:43%;--size:9px;--time:16s;--delay:-9s;--alpha:.24"></span>
+<span class="temo-water-drop" style="--x:58%;--size:6px;--time:14s;--delay:-7s;--alpha:.32"></span>
+<span class="temo-water-drop" style="--x:67%;--size:13px;--time:19s;--delay:-3s;--alpha:.24"></span>
+<span class="temo-water-drop" style="--x:79%;--size:7px;--time:13s;--delay:-10s;--alpha:.36"></span>
+<span class="temo-water-drop" style="--x:91%;--size:11px;--time:17s;--delay:-6s;--alpha:.27"></span>
+<span class="temo-water-drop" style="--x:96%;--size:5px;--time:15s;--delay:-12s;--alpha:.3"></span>
+<span class="temo-water-drop" style="--x:36%;--size:7px;--time:20s;--delay:-15s;--alpha:.25"></span>
+</div>
     <div class="hero-glow"></div>
     <div class="bubble"></div>
     <div class="bubble"></div>
@@ -356,7 +369,7 @@
       </div>
     </div>
     <div class="footer-col">
-      <h4>Quick links</h4>
+      <h3>Quick links</h3>
       <ul>
         <li><a href="/">Home</a></li>
         <li><a href="products.html">Products</a></li>
@@ -366,7 +379,7 @@
       </ul>
     </div>
     <div class="footer-col">
-      <h4>Business</h4>
+      <h3>Business</h3>
       <ul>
         <li><a href="business.html">Corporate supply</a></li>
         <li><a href="dealer.html">Dealer program</a></li>
@@ -374,7 +387,7 @@
       </ul>
     </div>
     <div class="footer-col">
-      <h4>Contact</h4>
+      <h3>Contact</h3>
       <ul>
         <li><a href="tel:03106666369">0310 6666369</a></li>
         <li><a href="https://wa.me/923106666369" target="_blank" rel="noopener">WhatsApp order</a></li>
@@ -399,5 +412,6 @@
 </div>
 
 <script src="main.js"></script>
+<script src="water-effects.js" defer></script>
 </body>
 </html>

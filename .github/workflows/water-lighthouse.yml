@@ -1,0 +1,33 @@
+name: TEMO Water Lighthouse QA
+on:
+  pull_request:
+    paths:
+      - 'index.html'
+      - 'water-effects.css'
+      - 'water-effects.js'
+      - 'tests/water-lighthouse.cjs'
+      - '.github/workflows/water-lighthouse.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  lighthouse:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install Lighthouse CLI
+        run: npm install --no-save --no-package-lock lighthouse
+      - name: Run local mobile and desktop Lighthouse
+        run: node tests/water-lighthouse.cjs
+      - name: Upload reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: temo-lighthouse-results
+          path: lighthouse-results/
+          retention-days: 7
+          if-no-files-found: ignore

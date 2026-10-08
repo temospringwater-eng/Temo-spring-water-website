@@ -1,0 +1,26 @@
+name: TEMO Contact Form Safe QA
+on:
+  pull_request:
+    paths:
+      - 'contact.html'
+      - 'main.js'
+      - 'water-effects.js'
+      - 'water-effects.css'
+      - 'tests/contact-form-safe.cjs'
+      - '.github/workflows/contact-form-safe.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  contact-form:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: |
+          npm install --no-save --no-package-lock playwright
+          npx playwright install --with-deps chromium
+      - run: node tests/contact-form-safe.cjs

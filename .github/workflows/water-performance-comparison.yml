@@ -1,0 +1,30 @@
+name: Water Effects Paired Performance
+on:
+  pull_request:
+    paths:
+      - 'index.html'
+      - 'water-effects.css'
+      - 'water-effects.js'
+      - 'tests/water-performance-comparison.cjs'
+      - '.github/workflows/water-performance-comparison.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  paired-mobile-lighthouse:
+    runs-on: ubuntu-latest
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm install --no-save --no-package-lock lighthouse
+      - run: node tests/water-performance-comparison.cjs
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: temo-water-paired-performance
+          path: water-comparison-results/
+          if-no-files-found: ignore
+          retention-days: 7

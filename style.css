@@ -426,7 +426,7 @@ h1,h2,h3,h4{ font-family:var(--font-display); font-optical-sizing:auto; font-wei
 }
 .footer-brand .logo-text .name{ color:#fff; }
 .footer-brand p{ margin-top:14px; font-size:0.92rem; max-width:260px; color:#9FC3CD; }
-.footer-col h4{ font-family:var(--font-body); font-size:0.86rem; letter-spacing:0.04em; color:#fff; margin-bottom:16px; }
+.footer-col h3{ font-family:var(--font-body); font-size:0.86rem; letter-spacing:0.04em; color:#fff; margin-bottom:16px; }
 .footer-col ul li{ margin-bottom:10px; }
 .footer-col a{ font-size:0.92rem; color:#B9D6DE; }
 .footer-col a:hover{ color:#fff; }
@@ -536,3 +536,8 @@ h1,h2,h3,h4{ font-family:var(--font-display); font-optical-sizing:auto; font-wei
   .footer-grid,.footer-bottom{ padding-left:var(--pad); padding-right:var(--pad); }
   .stat-row{ gap:24px; }
 }
+
+/* Lighthouse accessibility: stronger text contrast on light surfaces. */
+.section:not(.section--deep) .eyebrow{color:#086075}
+.section:not(.section--deep) .card a[style*="aqua-deep"]{color:#086075!important}
+.site-footer .logo-text .sub{color:#8FE4F0}

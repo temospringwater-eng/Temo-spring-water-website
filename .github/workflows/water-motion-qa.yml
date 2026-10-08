@@ -1,0 +1,35 @@
+name: Water Animation Motion QA
+on:
+  pull_request:
+    paths:
+      - 'index.html'
+      - 'about.html'
+      - 'products.html'
+      - 'contact.html'
+      - 'water-effects.css'
+      - 'water-effects.js'
+      - 'tests/water-motion-smoke.cjs'
+      - '.github/workflows/water-motion-qa.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  motion-check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: |
+          npm install --no-save --no-package-lock playwright
+          npx playwright install --with-deps chromium
+      - run: node tests/water-motion-smoke.cjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: temo-water-motion-screenshots
+          path: water-motion-evidence/
+          if-no-files-found: ignore
+          retention-days: 7
