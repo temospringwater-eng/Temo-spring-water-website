@@ -1,0 +1,44 @@
+name: TEMO Offline Preview Package
+on:
+  pull_request:
+    paths:
+      - '**/*.html'
+      - '**/*.css'
+      - '**/*.js'
+      - 'assets/**'
+      - 'images/**'
+      - '.github/workflows/temo-offline-preview.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  package-preview:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Package tracked public site files only
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import pathlib, subprocess, zipfile
+          allowed={'.html','.css','.js','.png','.jpg','.jpeg','.webp','.svg','.ico','.gif','.woff','.woff2','.txt','.xml','.json','.pdf'}
+          tracked=subprocess.check_output(['git','ls-files','-z']).decode().split('\0')
+          included=[]
+          with zipfile.ZipFile('temo-water-offline-preview.zip','w',compression=zipfile.ZIP_DEFLATED) as z:
+              for name in tracked:
+                  if not name: continue
+                  p=pathlib.PurePosixPath(name)
+                  if any(part.startswith('.') for part in p.parts): continue
+                  if p.parts[0] in ('tests','node_modules','docs'): continue
+                  if p.suffix.lower() not in allowed: continue
+                  if not pathlib.Path(name).is_file(): continue
+                  z.write(name)
+                  included.append(name)
+          assert {'index.html','contact.html','water-effects.css','water-effects.js'} <= set(included), 'Required preview files missing'
+          print('Preview archive contains',len(included),'tracked public files')
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: temo-water-offline-preview
+          path: temo-water-offline-preview.zip
+          retention-days: 7
