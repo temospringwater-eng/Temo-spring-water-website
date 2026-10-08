@@ -20,7 +20,19 @@ const sleep=ms=>new Promise(resolve=>setTimeout(resolve,ms));
   for(const [iteration,page] of [[1,'water-baseline-qa.html'],[1,'index.html'],[2,'index.html'],[2,'water-baseline-qa.html']]){
    const key=(page==='index.html'?'effects':'baseline')+'-'+iteration;
    const file='water-comparison-results/'+key+'.json';
-   execFileSync('npx',['lighthouse','http://127.0.0.1:8771/'+page,'--quiet','--chrome-flags=--headless --no-sandbox','--only-categories=performance','--output=json','--output-path='+file],{timeout:180000,stdio:'inherit'});
+   let measured=false;
+   for(let attempt=1;attempt<=3;attempt++){
+    try{
+     execFileSync('npx',['lighthouse','http://127.0.0.1:8771/'+page,'--quiet','--chrome-flags=--headless --no-sandbox --disable-dev-shm-usage','--only-categories=performance','--output=json','--output-path='+file],{timeout:180000,encoding:'utf8',stdio:['ignore','pipe','pipe']});
+     measured=true;break;
+    }catch(error){
+     const log=String(error.stderr||'')+' '+String(error.message||'');
+     if(!/dynamic debugging port|chrome-err\.log|Chrome.*(launch|start)/i.test(log)||attempt===3)throw error;
+     console.warn('Chrome startup issue; retrying measurement '+key+' ('+attempt+'/3)');
+     await sleep(2500*attempt);
+    }
+   }
+   if(!measured)throw Error('Measurement never completed: '+key);
    const report=JSON.parse(fs.readFileSync(file,'utf8'));
    const a=report.audits;
    results.push({key,score:report.categories.performance.score*100,LCP_ms:a['largest-contentful-paint']?.numericValue,CLS:a['cumulative-layout-shift']?.numericValue,TBT_ms:a['total-blocking-time']?.numericValue});
