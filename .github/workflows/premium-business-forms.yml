@@ -1,0 +1,26 @@
+name: TEMO Premium B2B Dealer Form QA
+on:
+  pull_request:
+    paths:
+      - 'business.html'
+      - 'dealer.html'
+      - 'main.js'
+      - 'premium-redesign.css'
+      - 'tests/premium-business-forms.cjs'
+      - '.github/workflows/premium-business-forms.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  safe-business-forms:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: |
+          npm install --no-save --no-package-lock playwright
+          npx playwright install --with-deps chromium
+      - run: node tests/premium-business-forms.cjs
