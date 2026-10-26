@@ -38,8 +38,9 @@ try{
      assert.match(await page.locator('form').getAttribute('action'),/^https:\/\/formsubmit\.co\//);
    }
    if(name==='index.html'){
-     assert.equal(await page.locator('a[href="business.html"]').count()>0,true,'B2B CTA');
-     assert.equal(await page.locator('a[href="products.html"]').count()>0,true,'shop CTA');
+     assert.equal(await page.locator('a[href="/business"]').count()>0,true,'B2B CTA canonical route');
+     assert.equal(await page.locator('a[href="/business#quote-form"]').count()>0,true,'B2B quote CTA canonical anchor');
+     assert.equal(await page.locator('a[href="/products"]').count()>0,true,'shop CTA canonical route');
    }
    if(width===390||width===1280)await page.screenshot({path:'premium-qa-screenshots/'+name.replace('.html','')+'-'+width+'.png',fullPage:true});
    console.log('PASS '+name+' '+width+'px');
